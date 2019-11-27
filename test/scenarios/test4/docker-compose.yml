@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  sut-a:
+    build: ../../../app
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
+      - ENVIRONMENT=staging
+      - REDIS_URI=redis://:passwordA@redis-a/0
+  
+  sut-b:
+    build: ../../../app
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
+      - ENVIRONMENT=qa
+      - REDIS_URI=redis://:passwordB@redis-b/0
+      
+  redis-a:
+    image: "redis:5.0-alpine"
+    command: --requirepass passwordA
+    
+  redis-b:
+    image: "redis:4.0-alpine"
+    command: --requirepass passwordB

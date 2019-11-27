@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  sut-a:
+    build: ../../../app
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
+      - ENVIRONMENT=staging
+  
+  sut-b:
+    build: ../../../app
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
+      - ENVIRONMENT=qa

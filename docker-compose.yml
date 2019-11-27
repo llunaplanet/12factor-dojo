@@ -1,0 +1,10 @@
+version: '3'
+services:
+  client:
+    build: ./app
+    ports:
+      - "9090:9090"
+
+  redis:
+    image: "redis:5.0-alpine"
+    command: --requirepass foobared

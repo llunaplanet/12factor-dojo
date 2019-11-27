@@ -1,0 +1,13 @@
+version: '3'
+services:
+  
+  sut-a:
+    build: ../../../app
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
+      - REDIS_URI=redis://:passwordA@redis-a/0
+  
+  redis-a:
+    image: "redis:5.0-alpine"
+    command: --requirepass passwordA

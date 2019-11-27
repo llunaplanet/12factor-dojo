@@ -1,0 +1,8 @@
+version: '3'
+services:
+
+  sut-a:
+    build: ../../../app
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
