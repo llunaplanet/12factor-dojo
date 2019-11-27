@@ -14,7 +14,7 @@ build-tester:
 	docker build -t tester ./test
 	
 start-executor:
-	docker run -it --rm -e DOCKER_HOST=tcp://172.17.0.2:2375 -w /executor executor
+	docker run -it --rm -e DOCKER_HOST=tcp://172.17.0.2:2375 -v ${PWD}:/data -w /data executor
 
 prepare: build-tester
 	docker pull node:10-alpine
@@ -42,7 +42,6 @@ test11: build-tester
 	./test/scenarios/test11/run.sh
 	
 test: build-tester
-	# XI. Treat logs as event streams
 	./test/scenarios/testall/run.sh
 	
 start-executor-sync:
