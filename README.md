@@ -99,6 +99,8 @@ Este es el listado de las katakoans que hay actualmente junto con el comando que
    - `make test11`
  - IX. Maximize robustness with fast startup and graceful shutdown
 	 - `make test9`
+   
+Una vez hayas completado todos los ejercicios individualmente, ejecuta `make test-all` para pasar todos los tests en el mismo run
 
 ### Restricciones
 

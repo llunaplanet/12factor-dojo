@@ -41,6 +41,7 @@ build-tester:
 
 prepare: build-tester
 	docker pull node:10-alpine
+	docker pull redis:4.0-alpine
 	docker pull redis:5.0-alpine
 	docker pull ruby:2-alpine3.9
 
@@ -70,5 +71,5 @@ test11: build-tester
 patch11:
 	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test11.patch
 
-test: build-tester
+test-all: build-tester
 	./test/scenarios/testall/run.sh
