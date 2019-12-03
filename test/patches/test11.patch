@@ -1,0 +1,48 @@
+diff --git a/app/server.js b/app/server.js
+index 86a02db..934caec 100755
+--- a/app/server.js
++++ b/app/server.js
+@@ -7,6 +7,15 @@
+ const express = require("express");
+ const path = require("path");
+ const redis = require("redis");
++const winston = require('winston');
++
++const error_logger = winston.createLogger({
++  level: 'error',
++  format: winston.format.json(),
++  transports: [
++    new winston.transports.File({ filename: 'error.log'})
++  ]
++});
+ 
+ /**
+  * App Variables
+@@ -41,10 +50,14 @@ app.get("/masuno", (req, res) => {
+   });
+ });
+ 
++app.get("/dameun500", (req, res) => {
++  throw new Error('Toma un 500!');
++});
++
+ /**
+  * Server Activation
+  */
+-
++ 
+ redis_client = redis.createClient(6379,"redis",{ "password": "foobared"});
+ redis_client.on("error", function (err) {
+   console.log("Error " + err);
+@@ -52,6 +65,11 @@ redis_client.on("error", function (err) {
+ 
+ redis_client.on("ready", function (err) {
+   redis_client.set("masuno", 0);
++}); 
++
++app.use(function(err, req, res, next) {
++  error_logger.error(err.stack);
++  res.status(500).send('Toma 500!');
+ });
+ 
+ app.listen(port, () => {

@@ -51,6 +51,9 @@ test3: build-tester
 # IV. Backing services
 test4: build-tester
 	./test/scenarios/test4/run.sh
+	
+patch4:
+	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test4.patch
 
 # V. Strictly separate build and run stages
 test5: build-tester
@@ -63,6 +66,9 @@ test9: build-tester
 # XI. Treat logs as event streams
 test11: build-tester
 	./test/scenarios/test11/run.sh
-	
+
+patch11:
+	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test11.patch
+
 test: build-tester
 	./test/scenarios/testall/run.sh

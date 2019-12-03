@@ -1,0 +1,39 @@
+diff --git a/app/server.js b/app/server.js
+index 56d83c4..1bf62bb 100755
+--- a/app/server.js
++++ b/app/server.js
+@@ -6,6 +6,7 @@
+ 
+ const express = require("express");
+ const path = require("path");
++const redis = require("redis");
+ 
+ /**
+  * App Variables
+@@ -32,9 +33,26 @@ app.get("/saludos", (req, res) => {
+   res.status(200).send(app.get("mot"));
+ });
+ 
++app.get("/masuno", (req, res) => {
++  redis_client.get("masuno", function(err, masuno) {
++    masuno++
++    redis_client.set("masuno", masuno);
++    res.status(200).send("Contador: " + masuno);
++  });
++});
++
+ /**
+  * Server Activation
+  */
++ 
++redis_client = redis.createClient(6379,"redis",{ "password": "foobared"});
++redis_client.on("error", function (err) {
++  console.log("Error " + err);
++});
++
++redis_client.on("ready", function (err) {
++  redis_client.set("masuno", 0);
++}); 
+ 
+ app.listen(port, () => {
+   console.log(`Listening to requests on ${port}`);
