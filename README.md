@@ -1,14 +1,14 @@
-# Bienvenidos al dojo 🏯 de 12-factor 
+# Bienvenidos al dojo 🏯 de 12 factor
 
 Aquí encontrarás algunos ejercicios, mezcla entre katas y koans con las que practicar tu DevOps-fu 🥋, mejorar tus habilidades y ganar experiencia. 
 
 ## The twelve-factor app
 
-12 Factor puede faltar en nuestra caja de herramientas DevOps, se trata de una metodología para construir aplicaciones. https://12factor.net
+Se trata de una metodología para construir aplicaciones y no puede faltar en nuestra caja de herramientas DevOps. Pásate por https://12factor.net/es/ que lo explica muy bien
 
 ## Los ejercicios
 
-Los ejercicios te ayudarán a entender de forma práctica los principios de **12 factor**
+Los ejercicios que aquí proponemos te ayudarán a entender de forma práctica los principios de **12 factor**
 
 ### Katas o Koans?
 
