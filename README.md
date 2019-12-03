@@ -85,14 +85,18 @@ make test3
 
 Este es el listado de las katakoans que hay actualmente junto con el comando que ejecuta su test.
 
+> IMPORTANTE: En algunas de las katakoans deberás ejecutar un comando extra para añadir a la aplicación nuevas funcionalidades con las que trabajar, puede que esto cause algún conflicto con tu git, pero esto también es bueno para practicar tu git-fu ;)
+
  - III. Store config in the environment    
 	 - `make test3`
  - IV. Backing services
-	 -  `make test4`
+   -  `make patch4` ( Ejecuta sólo una vez )
+   -  `make test4`
  - V. Strictly separate build and run stages
 	 - `make test5`
  - XI. Treat logs as event streams
-	 - `make test11`
+   - `make patch11` ( Ejecuta sólo una vez )
+   - `make test11`
  - IX. Maximize robustness with fast startup and graceful shutdown
 	 - `make test9`
 
