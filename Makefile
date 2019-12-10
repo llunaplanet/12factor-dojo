@@ -24,9 +24,10 @@ build-executor:
 	docker build -t executor .
 	
 start-executor:
+	DIND_HOST=$$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dind ); \
 	docker run -it --rm \
-		-e DOCKER_HOST=tcp://172.17.0.2:2375 \
-		-v ${PWD}:/dojo \
+		-e DOCKER_HOST=tcp://$$DIND_HOST:2375 \
+		-v $$PWD:/dojo \
 		-w /dojo \
 		executor
 
