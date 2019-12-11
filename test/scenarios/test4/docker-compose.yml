@@ -2,7 +2,7 @@ version: '3'
 services:
 
   sut-a:
-    build: ../../../app
+    image: sut
     environment:
       - PORT=80
       - MOT=Aupaaaa!
@@ -10,7 +10,7 @@ services:
       - REDIS_URI=redis://:passwordA@redis-a/0
   
   sut-b:
-    build: ../../../app
+    image: sut
     environment:
       - PORT=80
       - MOT=Aupaaaa!

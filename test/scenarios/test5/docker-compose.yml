@@ -2,14 +2,14 @@ version: '3'
 services:
 
   sut-a:
-    build: ../../../app
+    image: sut
     environment:
       - PORT=80
       - MOT=Aupaaaa!
       - ENVIRONMENT=staging
   
   sut-b:
-    build: ../../../app
+    image: sut
     environment:
       - PORT=80
       - MOT=Aupaaaa!
