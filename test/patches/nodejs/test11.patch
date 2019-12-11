@@ -1,7 +1,7 @@
-diff --git a/app/server.js b/app/server.js
+diff --git a/app/nodejs/server.js b/app/nodejs/server.js
 index 86a02db..934caec 100755
---- a/app/server.js
-+++ b/app/server.js
+--- a/app/nodejs/server.js
++++ b/app/nodejs/server.js
 @@ -7,6 +7,15 @@
  const express = require("express");
  const path = require("path");

@@ -2,13 +2,13 @@ version: '3'
 services:
   
   sut-a:
-    build: ../../../app
+    image: sut
     environment:
       - PORT=80
       - MOT=Aupaaaa!
   
   sut-b:
-    build: ../../../app
+    image: sut
     environment:
       - PORT=80
       - MOT=¿Qué pasa pisha?

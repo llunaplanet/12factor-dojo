@@ -1,7 +1,7 @@
-diff --git a/app/server.js b/app/server.js
+diff --git a/app/nodejs/server.js b/app/nodejs/server.js
 index 56d83c4..1bf62bb 100755
---- a/app/server.js
-+++ b/app/server.js
+--- a/app/nodejs/server.js
++++ b/app/nodejs/server.js
 @@ -6,6 +6,7 @@
  
  const express = require("express");

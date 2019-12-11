@@ -2,6 +2,14 @@
 setup: create-dind build-executor
 hajime: start-executor
 
+setup-nodejs:
+	echo "Seeting up [nodejs] stack..."
+	@echo "nodejs" > .stack	
+
+setup-go:
+	echo "Setting up [go] stack..."
+	@echo "go" > .stack
+	
 # Targets to manage the DIND ( Execute in the host )
 
 create-dind:
@@ -38,7 +46,8 @@ start-executor-sync:
 # Targets to execute the tests
 
 build-tester:
-	docker build -t tester ./test
+	# touch build-tester
+	docker build --quiet -t tester ./test
 
 prepare: build-tester
 	docker pull node:10-alpine
@@ -48,29 +57,29 @@ prepare: build-tester
 
 # III. Store config in the environment
 test3: build-tester
-	./test/scenarios/test3/run.sh
+	time ./test/run.sh test3 01_test3_spec.rb
 	
 # IV. Backing services
 test4: build-tester
-	./test/scenarios/test4/run.sh
+	time ./test/run.sh test4 02_test4_spec.rb
 	
 patch4:
-	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test4.patch
+	time ./test/patch.sh test4
 
 # V. Strictly separate build and run stages
 test5: build-tester
-	./test/scenarios/test5/run.sh
+	time ./test/run.sh test5 03_test5_spec.rb
 	
 # IX. Maximize robustness with fast startup and graceful shutdown
 test9: build-tester
-	./test/scenarios/test9/run.sh
+	time ./test/run.sh test9 05_test9_spec.rb
 
 # XI. Treat logs as event streams
 test11: build-tester
-	./test/scenarios/test11/run.sh
+	time ./test/run.sh test11 04_test11_spec.rb
 
 patch11:
-	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test11.patch
+	time ./test/patch.sh test11
 
 test-all: build-tester
 	./test/scenarios/testall/run.sh
