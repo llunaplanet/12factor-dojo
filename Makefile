@@ -64,7 +64,7 @@ test4: build-tester
 	time ./test/run.sh test4 02_test4_spec.rb
 	
 patch4:
-	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test4.patch
+	time ./test/patch.sh test4
 
 # V. Strictly separate build and run stages
 test5: build-tester
@@ -79,7 +79,7 @@ test11: build-tester
 	time ./test/run.sh test11 04_test11_spec.rb
 
 patch11:
-	git apply --reject --whitespace=nowarn --whitespace=fix test/patches/test11.patch
+	time ./test/patch.sh test11
 
 test-all: build-tester
 	./test/scenarios/testall/run.sh

@@ -8,7 +8,6 @@ start_test_harness() {
   NAMESPACE=$1
   echo "Starting test harness..."
   docker-compose -p $NAMESPACE -f ./test/scenarios/$NAMESPACE/docker-compose.yml up --quiet-pull -d > /dev/null
-  
 }
 
 stop_test_harness() {
@@ -22,4 +21,10 @@ run_test_suite() {
   SPEC_FILE=$2
   echo "Running test suite..."
   docker run -e DOCKER_HOST=$DOCKER_HOST -it --rm --network "${NAMESPACE}_default" tester rspec spec/$SPEC_FILE
+}
+
+patch_code() {
+  NAMESPACE=$1
+  FLAVOR=$2
+  git apply --reject --whitespace=nowarn --whitespace=fix test/patches/${FLAVOR}/${NAMESPACE}.patch
 }
