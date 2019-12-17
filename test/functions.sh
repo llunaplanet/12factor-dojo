@@ -8,7 +8,7 @@ build_sut() {
 start_test_harness() {
   FACTOR_NUMBER=$1
   echo "Starting test harness ... [factor${FACTOR_NUMBER}]"
-  docker-compose -p test${FACTOR_NUMBER} -f ./test/scenarios/test${FACTOR_NUMBER}/docker-compose.yml up --quiet-pull -d > /dev/null
+  docker-compose -p test${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml up --quiet-pull -d > /dev/null
 }
 
 # start_test_harness() {
@@ -20,7 +20,7 @@ start_test_harness() {
 stop_test_harness() {
   FACTOR_NUMBER=$1
   echo "Stopping test harness [factor${FACTOR_NUMBER}]"
-  docker-compose -p test${FACTOR_NUMBER} -f ./test/scenarios/test${FACTOR_NUMBER}/docker-compose.yml stop > /dev/null
+  docker-compose -p test${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml stop > /dev/null
 }
 
 build_test_harness() {
@@ -37,13 +37,13 @@ inspect() {
 logs() {
   NAMESPACE=$1
   echo "Showing test harness logs..."
-  docker-compose -p test${NAMESPACE} -f ./test/scenarios/test${NAMESPACE}/docker-compose.yml logs --tail="all"
+  docker-compose -p factor${NAMESPACE} -f ./test/scenarios/factor${NAMESPACE}/docker-compose.yml logs --tail="all"
 }
 
 clean() {
   NAMESPACE=$1
   echo "Destroying test harness ... [factor${NAMESPACE}]..."
-  docker-compose -p test${NAMESPACE} -f ./test/scenarios/test${NAMESPACE}/docker-compose.yml down --remove-orphans > /dev/null
+  docker-compose -p factor${NAMESPACE} -f ./test/scenarios/factor${NAMESPACE}/docker-compose.yml down --remove-orphans > /dev/null
 }
 
 run_test_suite() {
