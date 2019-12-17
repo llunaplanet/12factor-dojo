@@ -44,6 +44,14 @@ app.get("/saludos", (req, res) => {
 /**
  * Routes para el factor6
  */
+ 
+/**
+* Routes para el factor9
+*/
+
+/**
+* Routes para el factor11
+*/
 
 /**
  * Server Activation
