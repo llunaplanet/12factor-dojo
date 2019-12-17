@@ -14,7 +14,7 @@ describe "IX. Maximize robustness with fast startup and graceful shutdown" do
   it "Una vez las dependencias están disponibles debe contestar con normalidad" do
 
     # Send SIGUSR1 to slowredis
-    container_id = get_container_id(docker_host, ["/test9_nats-slow_1","/testall_nats-slow_1"])
+    container_id = get_container_id(docker_host, ["/factor9_nats-slow_1","/testall_nats-slow_1"])
     send_signal_response = HTTParty.post("#{docker_host}/v1.38/containers/#{container_id}/kill?signal=SIGUSR1")
     
     expect(send_signal_response.code).to eq(204)
@@ -52,7 +52,7 @@ describe "IX. Maximize robustness with fast startup and graceful shutdown" do
     end
     
     # Stop the redis container
-    container_id = get_container_id(docker_host, ["/test9_sut-a_1","/testall_sut-a_1"])
+    container_id = get_container_id(docker_host, ["/factor9_sut-a_1","/testall_sut-a_1"])
     container_stop_response = HTTParty.post("#{docker_host}/v1.38/containers/#{container_id}/stop?t=5")
     expect(container_stop_response.code).to eq(204)
     

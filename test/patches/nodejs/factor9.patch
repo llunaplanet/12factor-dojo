@@ -1,0 +1,45 @@
+diff --git a/app/nodejs/server.js b/app/nodejs/server.js
+index 121dd09..5b336bc 100755
+--- a/app/nodejs/server.js
++++ b/app/nodejs/server.js
+@@ -9,6 +9,7 @@ const session = require("express-session");
+ const path = require("path");
+ const redis = require("redis");
+ const winston = require('winston');
++const nats = require('nats');
+ 
+ const error_logger = winston.createLogger({
+   level: 'error',
+@@ -31,6 +32,17 @@ redis_client.on("ready", function (err) {
+   redis_client.set("masuno", 0);
+ });
+ 
++var nc = nats.connect({
++  'url': process.env.NATS_URI,
++  'maxReconnectAttempts': -1, 
++  'reconnectTimeWait': 250,
++  'waitOnFirstConnect': true
++});
++
++nc.on('error', function(err) {
++	console.log(err);
++});
++
+ /**
+  * App Variables
+  */
+@@ -93,6 +105,14 @@ app.get("/quiensoy", (req, res) => {
+ * Rutas para el factor9
+ */
+ 
++app.get("/encolame", (req, res) => {
++  
++  nc.publish('foo', 'Hello World!', function() {
++    res.status(200).send("Mensaje enviado a la cola");
++  });
++
++});
++
+ /**
+ * Rutas para el factor11
+ */

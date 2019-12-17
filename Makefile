@@ -85,6 +85,10 @@ patch6:
 test9: build-test-runner
 	time ./test/run.sh 9
 
+patch9:
+	time ./test/patch.sh 9
+
+
 # XI. Treat logs as event streams
 test11: build-test-runner
 	time ./test/run.sh 11
