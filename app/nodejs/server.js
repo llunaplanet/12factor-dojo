@@ -5,6 +5,7 @@
  */
 
 const express = require("express");
+const express = require("express-session");
 const path = require("path");
 
 /**
@@ -23,6 +24,14 @@ app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set("mot", "Cheee nano!")
+
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: '12factordojo'
+  })
+)
 
 /**
  * Routes Definitions
