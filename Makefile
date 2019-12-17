@@ -1,7 +1,8 @@
 
 setup: create-dind build-executor
 hajime: start-executor
-
+clean: delete-dind
+	
 setup-nodejs:
 	echo "Seeting up [nodejs] stack..."
 	@echo "nodejs" > .stack	
@@ -25,6 +26,9 @@ start-dind:
 
 stop-dind:
 	docker stop dind
+	
+delete-dind: stop-dind
+	docker rm dind
 	
 # Targets to manage the executor ( Execute in the host )
 		
