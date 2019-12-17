@@ -1,10 +1,10 @@
 diff --git a/app/nodejs/server.js b/app/nodejs/server.js
-index 26ce096..3764290 100755
+index fef0510..2f18a77 100755
 --- a/app/nodejs/server.js
 +++ b/app/nodejs/server.js
 @@ -7,6 +7,20 @@
  const express = require("express");
- const express = require("express-session");
+ const session = require("express-session");
  const path = require("path");
 +const redis = require("redis");
 +
@@ -19,14 +19,15 @@ index 26ce096..3764290 100755
 +
 +redis_client.on("ready", function (err) {
 +  redis_client.set("masuno", 0);
-+}); 
++});
  
  /**
   * App Variables
-@@ -41,6 +55,14 @@ app.get("/saludos", (req, res) => {
-   res.status(200).send(app.get("mot"));
- });
- 
+@@ -44,6 +58,14 @@ app.get("/saludos", (req, res) => {
+ /**
+  * Rutas para el factor4
+  */
++ 
 +app.get("/masuno", (req, res) => {
 +  redis_client.get("masuno", function(err, masuno) {
 +    masuno++
@@ -34,7 +35,6 @@ index 26ce096..3764290 100755
 +    res.status(200).send("Contador: " + masuno);
 +  });
 +});
-+
+ 
  /**
-  * Server Activation
-  */
+  * Rutas para el factor6

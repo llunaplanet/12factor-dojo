@@ -3,7 +3,7 @@ index 3747d1d..8e40894 100755
 --- a/app/nodejs/server.js
 +++ b/app/nodejs/server.js
 @@ -45,6 +45,15 @@ app.get("/saludos", (req, res) => {
-  * Routes para el factor6
+  * Rutas para el factor6
   */
   
 +app.get("/diminombre", (req, res) => {
@@ -16,5 +16,5 @@ index 3747d1d..8e40894 100755
 +});
 + 
  /**
- * Routes para el factor9
+ * Rutas para el factor9
  */
