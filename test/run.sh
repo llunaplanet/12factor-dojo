@@ -6,5 +6,6 @@ sabor=$(cat .sabor)
 
 build_sut $sabor
 start_test_harness $1
+set +e
 run_test_suite $1 $2
 stop_test_harness $1

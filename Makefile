@@ -57,26 +57,26 @@ prepare: build-tester
 
 # III. Store config in the environment
 test3: build-tester
-	time ./test/run.sh test3 01_test3_spec.rb
+	time ./test/run.sh 3
 	
 # IV. Backing services
 test4: build-tester
-	time ./test/run.sh test4 02_test4_spec.rb
+	time ./test/run.sh 4
 	
 patch4:
 	time ./test/patch.sh test4
 
 # V. Strictly separate build and run stages
 test5: build-tester
-	time ./test/run.sh test5 03_test5_spec.rb
-	
+	time ./test/run.sh 5
+
 # IX. Maximize robustness with fast startup and graceful shutdown
 test9: build-tester
-	time ./test/run.sh test9 05_test9_spec.rb
+	time ./test/run.sh 9
 
 # XI. Treat logs as event streams
 test11: build-tester
-	time ./test/run.sh test11 04_test11_spec.rb
+	time ./test/run.sh 11
 
 patch11:
 	time ./test/patch.sh test11
