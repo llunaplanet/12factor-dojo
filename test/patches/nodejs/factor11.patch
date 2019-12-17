@@ -1,9 +1,9 @@
 diff --git a/app/nodejs/server.js b/app/nodejs/server.js
-index 86a02db..934caec 100755
+index efb73cb..4547631 100755
 --- a/app/nodejs/server.js
 +++ b/app/nodejs/server.js
-@@ -7,6 +7,15 @@
- const express = require("express");
+@@ -8,6 +8,15 @@ const express = require("express");
+ const session = require("express-session");
  const path = require("path");
  const redis = require("redis");
 +const winston = require('winston');
@@ -17,32 +17,20 @@ index 86a02db..934caec 100755
 +});
  
  /**
-  * App Variables
-@@ -41,10 +50,14 @@ app.get("/masuno", (req, res) => {
-   });
- });
+  * External services configuration
+@@ -88,6 +97,15 @@ app.get("/quiensoy", (req, res) => {
+ * Rutas para el factor11
+ */
  
 +app.get("/dameun500", (req, res) => {
 +  throw new Error('Toma un 500!');
 +});
 +
- /**
-  * Server Activation
-  */
--
-+ 
- redis_client = redis.createClient(6379,"redis",{ "password": "foobared"});
- redis_client.on("error", function (err) {
-   console.log("Error " + err);
-@@ -52,6 +65,11 @@ redis_client.on("error", function (err) {
- 
- redis_client.on("ready", function (err) {
-   redis_client.set("masuno", 0);
-+}); 
-+
 +app.use(function(err, req, res, next) {
 +  error_logger.error(err.stack);
 +  res.status(500).send('Toma 500!');
- });
- 
- app.listen(port, () => {
++});
++
+ /**
+  * Server Activation
+  */
