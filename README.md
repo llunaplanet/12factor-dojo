@@ -93,7 +93,10 @@ Este es el listado de las katakoans que hay actualmente junto con el comando que
    -  `make patch4` ( Ejecuta sólo una vez )
    -  `make test4`
  - V. Strictly separate build and run stages
-	 - `make test5`
+   - `make test5`
+ - VI. Procceses
+   - `make patch6` ( Ejecuta sólo una vez )
+   - `make test6`
  - XI. Treat logs as event streams
    - `make patch11` ( Ejecuta sólo una vez )
    - `make test11`

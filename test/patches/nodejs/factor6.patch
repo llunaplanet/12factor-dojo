@@ -1,0 +1,20 @@
+diff --git a/app/nodejs/server.js b/app/nodejs/server.js
+index 3747d1d..8e40894 100755
+--- a/app/nodejs/server.js
++++ b/app/nodejs/server.js
+@@ -45,6 +45,15 @@ app.get("/saludos", (req, res) => {
+  * Routes para el factor6
+  */
+  
++app.get("/diminombre", (req, res) => {
++  req.session.user_name = req.query.nombre
++  res.status(200).send("Hola " + req.query.nombre + ", encantado de conocerte");
++});
++
++app.get("/quiensoy", (req, res) => {
++  res.status(200).send(req.session.user_name);
++});
++ 
+ /**
+ * Routes para el factor9
+ */

@@ -5,7 +5,7 @@
  */
 
 const express = require("express");
-const express = require("express-session");
+const session = require("express-session");
 const path = require("path");
 
 /**
@@ -42,15 +42,19 @@ app.get("/saludos", (req, res) => {
 });
 
 /**
- * Routes para el factor6
+ * Rutas para el factor4
+ */
+
+/**
+ * Rutas para el factor6
  */
  
 /**
-* Routes para el factor9
+* Rutas para el factor9
 */
 
 /**
-* Routes para el factor11
+* Rutas para el factor11
 */
 
 /**

@@ -77,6 +77,9 @@ test5: build-test-runner
 # VI. Processes
 test6: build-test-runner
 	time ./test/run.sh 6
+	
+patch6:
+	time ./test/patch.sh 6
 
 # IX. Maximize robustness with fast startup and graceful shutdown
 test9: build-test-runner
