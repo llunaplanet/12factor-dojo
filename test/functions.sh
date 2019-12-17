@@ -49,7 +49,7 @@ clean() {
 run_test_suite() {
   FACTOR_NUMBER=$1
   echo "Running test suite ... [factor${FACTOR_NUMBER}]"
-  docker run -e DOCKER_HOST=$DOCKER_HOST -it --rm --network "test${FACTOR_NUMBER}_default" tester rspec spec/factor${FACTOR_NUMBER}
+  docker run -e DOCKER_HOST=$DOCKER_HOST -it --rm --network "test${FACTOR_NUMBER}_default" test-runner rspec spec/factor${FACTOR_NUMBER}
 }
 
 patch_code() {

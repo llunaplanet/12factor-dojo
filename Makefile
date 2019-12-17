@@ -45,41 +45,41 @@ start-executor-sync:
 
 # Targets to execute the tests
 
-build-tester:
-	# touch build-tester
-	docker build --quiet -t tester ./test
+build-test-runner:
+	# touch build-test-runner
+	docker build --quiet -t test-runner ./test
 
-prepare: build-tester
+prepare: build-test-runner
 	docker pull node:10-alpine
 	docker pull redis:4.0-alpine
 	docker pull redis:5.0-alpine
 	docker pull ruby:2-alpine3.9
 
 # III. Store config in the environment
-test3: build-tester
+test3: build-test-runner
 	time ./test/run.sh 3
 	
 # IV. Backing services
-test4: build-tester
+test4: build-test-runner
 	time ./test/run.sh 4
 	
 patch4:
 	time ./test/patch.sh test4
 
 # V. Strictly separate build and run stages
-test5: build-tester
+test5: build-test-runner
 	time ./test/run.sh 5
 
 # IX. Maximize robustness with fast startup and graceful shutdown
-test9: build-tester
+test9: build-test-runner
 	time ./test/run.sh 9
 
 # XI. Treat logs as event streams
-test11: build-tester
+test11: build-test-runner
 	time ./test/run.sh 11
 
 patch11:
 	time ./test/patch.sh test11
 
-test-all: build-tester
+test-all: build-test-runner
 	./test/scenarios/testall/run.sh
