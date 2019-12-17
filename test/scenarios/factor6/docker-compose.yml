@@ -1,0 +1,49 @@
+version: '3'
+services:
+  
+  proxy:
+    image: traefik:1.7-alpine
+    command: [
+      "--defaultentrypoints=http",
+      "--logLevel=DEBUG",
+      "--docker",
+      "--docker.watch",
+      "--docker.exposedbydefault=false"
+    ]
+    volumes:
+      - /dev/null:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - sut-a
+      - sut-b
+
+  sut-a:
+    image: sut
+    environment:
+      - PORT=80
+      - MOT=Aupaaaa!
+      - REDIS_URI=redis://redis/0
+      - DEBUG=http
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.frontend.backend=sut"
+      - "traefik.backend=sut"
+      - "traefik.port=80"
+  
+  sut-b:
+    image: sut
+    environment:
+      - PORT=80
+      - MOT=¿Qué pasa pisha?
+      - REDIS_URI=redis://redis/0
+      - DEBUG=http
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.frontend.backend=sut"
+      - "traefik.backend=sut"
+      - "traefik.port=80"
+  
+  redis:
+    image: "redis:5.0-alpine"

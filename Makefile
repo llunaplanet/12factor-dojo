@@ -73,6 +73,10 @@ patch4:
 # V. Strictly separate build and run stages
 test5: build-test-runner
 	time ./test/run.sh 5
+	
+# VI. Processes
+test6: build-test-runner
+	time ./test/run.sh 6
 
 # IX. Maximize robustness with fast startup and graceful shutdown
 test9: build-test-runner
