@@ -68,7 +68,7 @@ test4: build-test-runner
 	time ./test/run.sh 4
 	
 patch4:
-	time ./test/patch.sh test4
+	time ./test/patch.sh 4
 
 # V. Strictly separate build and run stages
 test5: build-test-runner
@@ -83,7 +83,7 @@ test11: build-test-runner
 	time ./test/run.sh 11
 
 patch11:
-	time ./test/patch.sh test11
+	time ./test/patch.sh 11
 
 test-all: build-test-runner
 	./test/scenarios/testall/run.sh

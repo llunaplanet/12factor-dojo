@@ -53,7 +53,7 @@ run_test_suite() {
 }
 
 patch_code() {
-  NAMESPACE=$1
+  FACTOR_NUMBER=$1
   FLAVOR=$2
-  git apply --reject --whitespace=nowarn --whitespace=fix test/patches/${FLAVOR}/${NAMESPACE}.patch
+  git apply --reject --whitespace=nowarn --whitespace=fix test/patches/${FLAVOR}/factor${FACTOR_NUMBER}.patch
 }
