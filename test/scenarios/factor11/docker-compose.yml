@@ -3,6 +3,11 @@ services:
 
   sut-a:
     image: sut
+    stop_signal: SIGKILL
     environment:
       - PORT=80
       - MOT=Aupaaaa!
+      - REDIS_URI=redis://redis/0
+  
+  redis:
+    image: "redis:5.0-alpine"

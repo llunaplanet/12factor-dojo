@@ -26,3 +26,4 @@ services:
   
   nats-slow:
     build: ../../dockerfiles/slownats
+    stop_signal: SIGKILL

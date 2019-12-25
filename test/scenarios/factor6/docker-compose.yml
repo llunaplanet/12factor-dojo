@@ -5,7 +5,7 @@ services:
     image: traefik:1.7-alpine
     command: [
       "--defaultentrypoints=http",
-      "--logLevel=DEBUG",
+      "--logLevel=INFO",
       "--docker",
       "--docker.watch",
       "--docker.exposedbydefault=false"
@@ -19,6 +19,7 @@ services:
 
   sut-a:
     image: sut
+    stop_signal: SIGKILL
     environment:
       - PORT=80
       - MOT=Aupaaaa!
@@ -33,6 +34,7 @@ services:
   
   sut-b:
     image: sut
+    stop_signal: SIGKILL
     environment:
       - PORT=80
       - MOT=¿Qué pasa pisha?

@@ -3,6 +3,7 @@ services:
 
   sut-a:
     image: sut
+    stop_signal: SIGKILL
     environment:
       - PORT=80
       - MOT=Aupaaaa!
@@ -11,6 +12,7 @@ services:
   
   sut-b:
     image: sut
+    stop_signal: SIGKILL
     environment:
       - PORT=80
       - MOT=Aupaaaa!
