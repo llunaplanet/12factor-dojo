@@ -5,11 +5,11 @@ clean: delete-dind
 	
 setup-nodejs:
 	echo "Seeting up [nodejs] stack..."
-	@echo "nodejs" > .stack	
+	@echo "nodejs" > .sabor	
 
 setup-go:
 	echo "Setting up [go] stack..."
-	@echo "go" > .stack
+	@echo "golang" > .sabor
 	
 # Targets to manage the DIND ( Execute in the host )
 
@@ -58,6 +58,7 @@ prepare: build-test-runner
 	docker pull redis:4.0-alpine
 	docker pull redis:5.0-alpine
 	docker pull ruby:2-alpine3.9
+	docker pull golang:1.13.8-alpine3.11
 
 # III. Store config in the environment
 test3: build-test-runner
