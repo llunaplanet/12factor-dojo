@@ -8,8 +8,6 @@ COPY ./go.sum $APP
 
 RUN go mod download
 
-# RUN apk add -u build-base
-
 COPY ./ $APP/
 
 RUN go build -o go/bin/main .
