@@ -1,0 +1,58 @@
+diff --git a/app/golang/go.mod b/app/golang/go.mod
+index 7adb443..ddab647 100644
+--- a/app/golang/go.mod
++++ b/app/golang/go.mod
+@@ -4,6 +4,7 @@ go 1.13
+ 
+ require (
+ 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
++	github.com/go-redis/redis/v7 v7.2.0
+ 	github.com/labstack/echo v3.3.10+incompatible
+ 	github.com/labstack/gommon v0.3.0 // indirect
+ 	github.com/valyala/fasttemplate v1.1.0 // indirect
+diff --git a/app/golang/main.go b/app/golang/main.go
+index 611a376..250ee6d 100644
+--- a/app/golang/main.go
++++ b/app/golang/main.go
+@@ -5,6 +5,7 @@ import (
+ 	"net/http"
+ 	"os"
+ 
++	"github.com/go-redis/redis/v7"
+ 	"github.com/labstack/echo"
+ 	"github.com/labstack/echo/middleware"
+ )
+@@ -13,6 +14,18 @@ func main() {
+ 	api := echo.New()
+ 	api.Use(middleware.Logger())
+ 
++	redisOptions, err := redis.ParseURL("redis://:foobared@redis/0")
++	if err != nil {
++		panic(err)
++	}
++
++	redisClient := redis.NewClient(redisOptions)
++
++	err = redisClient.Set("masuno", 0, 0).Err()
++	if err != nil {
++		panic(err)
++	}
++
+ 	os.Setenv("mot", "Cheee gonano!")
+ 
+ 	/**
+@@ -27,6 +40,14 @@ func main() {
+ 	 * Rutas para el factor4
+ 	 */
+ 
++	api.GET("/masuno", func(c echo.Context) error {
++		val, err := redisClient.Get("masuno").Result()
++		if err != nil {
++			panic(err)
++		}
++		return c.String(http.StatusOK, fmt.Sprintf("Contador: %v", val))
++	})
++
+ 	/**
+ 	 * Rutas para el factor6
+ 	 */
