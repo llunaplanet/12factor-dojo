@@ -39,7 +39,7 @@ services:
       - PORT=80
       - MOT=¿Qué pasa pisha?
       - REDIS_URI=redis://redis/0
-      - DEBUG=http
+
     labels:
       - "traefik.enable=true"
       - "traefik.frontend.rule=PathPrefix:/"

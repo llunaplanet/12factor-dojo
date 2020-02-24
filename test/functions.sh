@@ -5,6 +5,11 @@ build_sut() {
   # docker build --quiet -t sut $PWD/app_final
 }
 
+build_test_runner() {
+  echo "Building Test runner ... "
+  docker build --quiet -t test-runner ./test  
+}
+
 start_test_harness() {
   FACTOR_NUMBER=$1
   echo "Starting test harness ... [factor${FACTOR_NUMBER}]"
@@ -27,6 +32,17 @@ build_test_harness() {
   FACTOR_NUMBER=$1
   echo "Destroying test harness [factor${FACTOR_NUMBER}]..."
   docker-compose -p factor${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml build
+}
+
+test() {
+  FACTOR_NUMBER=$1
+  sabor=$(cat .sabor)
+  build_sut $sabor
+  build_test_runner
+  start_test_harness $1
+  set +e
+  run_test_suite $1 $2
+  stop_test_harness $1
 }
 
 inspect() {
@@ -56,4 +72,20 @@ patch_code() {
   FACTOR_NUMBER=$1
   FLAVOR=$2
   git apply --reject --whitespace=nowarn --whitespace=fix test/patches/${FLAVOR}/factor${FACTOR_NUMBER}.patch
+}
+
+test_all() {
+  FACTOR_NUMBER=$1
+  sabor=$(cat .sabor)
+  build_sut $sabor
+  start_test_harness all
+  set +e
+  run_test_suite 3
+  run_test_suite 4
+  run_test_suite 5
+  run_test_suite 6
+  run_test_suite 8
+  run_test_suite 11
+  run_test_suite 9
+  stop_test_harness all
 }
