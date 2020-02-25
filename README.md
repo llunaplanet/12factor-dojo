@@ -77,31 +77,43 @@ make prepare
 ```
 En este momento ya estás listo para practicar las katakoans:
 
-Empieza ejecutando el primer test, lee el resultado y piensa cómo puedes modificar la aplicación para que el test pase
+Empieza ejecutando el primer test con el sihguiente comando:
 ```
-make test3
+$ make test3
 ```
+El objetivo es que el test pase en verde, lee el resultado y piensa cómo puedes modificar la aplicación para conseguirlo, en algunos casos no hay una sola solución. 
+
+> Puedes explorar el entorno de test ( archivos docker-compose ) en la carpeta `test/scenarios` y los tests en sí mismos en la carpeta `test/spec`
+
+### Solución de problemas
+
+Puedes usar el comando `logs <número de factor>` para ver la salida de docker-compose, a veces hay fallos que no son muy descriptivos en la salida del test y es necesario indagar un poco más.
+
+Para limpiar los logs usa `clean <número de factor>`
+
 ### Listado de katakoans
 
 Este es el listado de las katakoans que hay actualmente junto con el comando que ejecuta su test.
+
+> IMPORTANTE: Los ejercicios han sido diseñados para que se completen en este orden
 
 > IMPORTANTE: En algunas de las katakoans deberás ejecutar un comando extra para añadir a la aplicación nuevas funcionalidades con las que trabajar, puede que esto cause algún conflicto con tu git, pero esto también es bueno para practicar tu git-fu ;)
 
  - III. Store config in the environment    
 	 - `make test3`
  - IV. Backing services
-   -  `make patch4` ( Ejecuta sólo una vez )
-   -  `make test4`
+   - `make patch4` ( Ejecútalo sólo una vez )
+   - `make test4`
  - V. Strictly separate build and run stages
    - `make test5`
  - VI. Procceses
-   - `make patch6` ( Ejecuta sólo una vez )
+   - `make patch6` ( Ejecútalo sólo una vez )
    - `make test6`
  - XI. Treat logs as event streams
-   - `make patch11` ( Ejecuta sólo una vez )
+   - `make patch11` ( Ejecútalo sólo una vez )
    - `make test11`
  - IX. Maximize robustness with fast startup and graceful shutdown
-   - `make patch9` ( Ejecuta sólo una vez )
+   - `make patch9` ( Ejecútalo sólo una vez )
    - `make test9`
    
 Una vez hayas completado todos los ejercicios individualmente, ejecuta `make test-all` para pasar todos los tests en el mismo run

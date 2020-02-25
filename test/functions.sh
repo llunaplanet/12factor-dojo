@@ -6,31 +6,25 @@ build_sut() {
 }
 
 build_test_runner() {
-  echo "Building Test runner ... "
+  echo "Building Test runner ..."
   docker build --quiet -t test-runner ./test  
 }
 
 start_test_harness() {
   FACTOR_NUMBER=$1
-  echo "Starting test harness ... [factor${FACTOR_NUMBER}]"
+  echo "Starting test harness for factor [${FACTOR_NUMBER}] ..."
   docker-compose -p factor${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml up --quiet-pull -d > /dev/null
 }
 
-# start_test_harness() {
-#   NAMESPACE=$1
-#   echo "Starting test harness..."
-#   docker-compose -p $NAMESPACE -f ./test/scenarios/$NAMESPACE/docker-compose.yml up --quiet-pull -d > /dev/null
-# }
-
 stop_test_harness() {
   FACTOR_NUMBER=$1
-  echo "Stopping test harness [factor${FACTOR_NUMBER}]"
+  echo "Stopping test harness for factor [${FACTOR_NUMBER}] ..."
   docker-compose -p factor${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml stop > /dev/null
 }
 
 build_test_harness() {
   FACTOR_NUMBER=$1
-  echo "Destroying test harness [factor${FACTOR_NUMBER}]..."
+  echo "Building test harness docker images for factor [${FACTOR_NUMBER}] ... "
   docker-compose -p factor${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml build
 }
 
@@ -52,19 +46,19 @@ inspect() {
 
 logs() {
   FACTOR_NUMBER=$1
-  echo "Showing test harness logs..."
+  echo "Showing test harness logs ..."
   docker-compose -p factor${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml logs --tail="all"
 }
 
 clean() {
   FACTOR_NUMBER=$1
-  echo "Destroying test harness ... [factor${FACTOR_NUMBER}]..."
+  echo "Destroying test harness for factor [${FACTOR_NUMBER}] ..."
   docker-compose -p factor${FACTOR_NUMBER} -f ./test/scenarios/factor${FACTOR_NUMBER}/docker-compose.yml down --remove-orphans > /dev/null
 }
 
 run_test_suite() {
   FACTOR_NUMBER=$1
-  echo "Running test suite ... [factor${FACTOR_NUMBER}]"
+  echo "Running test suite for factor [${FACTOR_NUMBER}] ..."
   docker run -e DOCKER_HOST=$DOCKER_HOST -it --rm --network "factor${FACTOR_NUMBER}_default" test-runner rspec spec/factor${FACTOR_NUMBER}
 }
 

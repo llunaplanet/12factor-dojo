@@ -5,11 +5,11 @@ clean: delete-dind
 	
 setup-nodejs:
 	echo "Seeting up [nodejs] stack..."
-	@echo "nodejs" > .stack	
+	@echo "nodejs" > .sabor	
 
 setup-go:
 	echo "Setting up [go] stack..."
-	@echo "go" > .stack
+	@echo "go" > .sabor
 	
 # Targets to manage the DIND ( Execute in the host )
 
