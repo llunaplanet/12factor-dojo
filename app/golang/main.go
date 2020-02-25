@@ -13,7 +13,9 @@ func main() {
 	api := echo.New()
 	api.Use(middleware.Logger())
 
-	os.Setenv("mot", "Cheee gonano!")
+	os.Setenv("mot", "Cheee go nano!")
+
+	api.Static("/", "public")
 
 	/**
 	 * Routes Definitions
