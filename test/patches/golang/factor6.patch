@@ -1,0 +1,60 @@
+diff --git a/app/golang/go.mod b/app/golang/go.mod
+index 7adb443..62b993a 100644
+--- a/app/golang/go.mod
++++ b/app/golang/go.mod
+@@ -3,8 +3,10 @@ module 12factor-dojo
+ go 1.13
+ 
+ require (
+-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
++	github.com/gorilla/sessions v1.2.0
+ 	github.com/labstack/echo v3.3.10+incompatible
++	github.com/labstack/echo-contrib v0.8.0
++	github.com/labstack/echo/v4 v4.1.6
+ 	github.com/labstack/gommon v0.3.0 // indirect
+ 	github.com/valyala/fasttemplate v1.1.0 // indirect
+ 	golang.org/x/crypto v0.0.0-20200214034016-1d94cc7ab1c6 // indirect
+diff --git a/app/golang/main.go b/app/golang/main.go
+index afa0685..e29e5de 100644
+--- a/app/golang/main.go
++++ b/app/golang/main.go
+@@ -5,13 +5,16 @@ import (
+ 	"net/http"
+ 	"os"
+ 
+-	"github.com/labstack/echo"
+-	"github.com/labstack/echo/middleware"
++	"github.com/labstack/echo/v4"
++	"github.com/labstack/echo/v4/middleware"
++	"github.com/gorilla/sessions"
++	"github.com/labstack/echo-contrib/session"
+ )
+ 
+ func main() {
+ 	api := echo.New()
+ 	api.Use(middleware.Logger())
++	api.Use(session.Middleware(sessions.NewCookieStore([]byte("12factordojo"))))
+ 
+ 	os.Setenv("mot", "Cheee go nano!")
+ 
+@@ -33,6 +36,20 @@ func main() {
+ 	 * Rutas para el factor6
+ 	 */
+ 
++	api.GET("/diminombre", func(c echo.Context) error {
++		nombre:= c.QueryParam("nombre")
++
++		sess.Values["user_name"] = nombre
++		sess.Save(c.Request(), c.Response())
++
++		return c.String(http.StatusOK, fmt.Sprintf("Hola %v, encantado de conocerte", nombre))
++	})
++
++	api.GET("/quiensoy", func(c echo.Context) error {
++		val, _ := sess.Values["user_name"].(string)
++		return c.String(http.StatusOK, val)
++	})
++
+ 	/**
+ 	 * Rutas para el factor9
+ 	 */
