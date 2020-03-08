@@ -7,6 +7,21 @@
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const redis = require("redis");
+
+/**
+ * External services configuration
+ */
+
+redis_client = redis.createClient(process.env.REDIS_URI);
+
+redis_client.on("error", function (err) {
+  console.log("Error " + err);
+});
+
+redis_client.on("ready", function (err) {
+  redis_client.set("masuno", 0);
+});
 
 /**
  * App Variables
@@ -23,7 +38,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.set("mot", "Cheee nano!")
+app.set("mot", process.env.MOT)
 
 app.use(
   session({
@@ -44,6 +59,14 @@ app.get("/saludos", (req, res) => {
 /**
  * Rutas para el factor4
  */
+
+app.get("/masuno", (req, res) => {
+  redis_client.get("masuno", function(err, masuno) {
+    masuno++
+    redis_client.set("masuno", masuno);
+    res.status(200).send("Contador: " + masuno);
+  });
+});
 
 /**
  * Rutas para el factor6
