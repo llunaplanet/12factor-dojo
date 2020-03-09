@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
-using NATS.Client;
 using ServiceStack.Redis;
 
 namespace dotnet
