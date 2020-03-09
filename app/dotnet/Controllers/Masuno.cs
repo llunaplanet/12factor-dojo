@@ -1,10 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+
 namespace dotnet.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class MasunoController : ControllerBase
     {
         private readonly IDistributedCache distributedCache;
@@ -14,6 +14,7 @@ namespace dotnet.Controllers
         }
 
         [HttpGet]
+        [Route("masuno")]
         public string Get()
         {
             int masuno = 0;

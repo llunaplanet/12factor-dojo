@@ -8,6 +8,7 @@ services:
       - PORT=80
       - MOT=Aupaaaa!
       - ENVIRONMENT=staging
+      - ASPNETCORE_ENVIRONMENT=staging
   
   sut-b:
     image: sut
@@ -16,3 +17,4 @@ services:
       - PORT=80
       - MOT=Aupaaaa!
       - ENVIRONMENT=qa
+      - ASPNETCORE_ENVIRONMENT=qa
