@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using NATS.Client;
+using ServiceStack.Redis;
 
 namespace dotnet
 {
@@ -23,11 +24,10 @@ namespace dotnet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddMemoryCache();
 
-            services.AddDistributedRedisCache(option =>
+            services.AddSingleton<RedisClient>(ser => 
             {
                 string connectionStringRedis = Environment.GetEnvironmentVariable("REDIS_URI") ?? String.Empty;
                 Regex regex = new Regex(@"redis://:(?<password>[\w\-]+)@(?<server>[\w\-]+)/", RegexOptions.None);
@@ -37,27 +37,12 @@ namespace dotnet
                     string server = match.Result("${server}");
                     string password = match.Result("${password}");
 
-                    option.Configuration = $"{server},password={password}";
+                    return new RedisClient(server, 6379, password);
                 }
+                return new RedisClient();
             });
-            services.AddTransient<IConnection>(s =>
-            {
-                try
-                {                    
-                    ConnectionFactory factory = new ConnectionFactory();
-                    var options = ConnectionFactory.GetDefaultOptions();
-                    options.Url = Environment.GetEnvironmentVariable("NATS_URI");
-                    options.MaxReconnect = -1;
-                    options.ReconnectWait = 250;
-                    options.AllowReconnect = true;
-
-                    return factory.CreateConnection(options);
-                }
-                catch
-                {
-                    return null;
-                }
-            });
+            
+            services.AddSingleton<Services.IQueueService, Services.QueueService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,11 +53,6 @@ namespace dotnet
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            // else
-            // {
-            //     app.UseExceptionHandler("error");
-            // }
 
             cache.Set("mot", Environment.GetEnvironmentVariable("MOT"));
 

@@ -21,6 +21,7 @@ services:
       
   redis-a:
     image: "redis:5.0-alpine"
+    command: --requirepass passwordA
     
   redis-b:
     image: "redis:4.0-alpine"

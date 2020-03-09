@@ -39,13 +39,13 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
-            "Microsoft.Extensions.Caching.Redis": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
             "NATS.Client": {
               "target": "Package",
               "version": "[0.10.0, )"
+            },
+            "ServiceStack.Redis": {
+              "target": "Package",
+              "version": "[5.8.0, )"
             }
           },
           "imports": [
