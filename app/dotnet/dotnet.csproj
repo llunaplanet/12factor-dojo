@@ -7,9 +7,4 @@
   <ItemGroup>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NATS.Client" Version="0.10.0" />
-    <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
-  </ItemGroup>
-
 </Project>
