@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
@@ -16,8 +15,7 @@ namespace dotnet.Controllers
         [Route("/saludos")]
         public IActionResult saludos([FromServices] IMemoryCache cacheService)
         {
-            string saludo = cacheService.Get("mot")?.ToString() ?? "Hola sin más";
-            return Ok(saludo);
+            return Ok(cacheService.Get("mot"));
         }
 
         ///
