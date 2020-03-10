@@ -30,26 +30,12 @@ namespace dotnet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMemoryCache cache)
         {
-            app.UseExceptionHandler(errorHandler => 
-            {
-                errorHandler.Run(async context =>
-                {
-                    var ex = context.Features.Get<IExceptionHandlerPathFeature>();
-                    string error = "Error";
-
-                    if (ex?.Error != null)
-                    {
-                        error  = ex.Error.Message;
-                    }
-                    
-                    Console.WriteLine(error);
-                    context.Response.StatusCode = 500;
-                    await context.Response.WriteAsync($"Url: {context.Request.Path}\n");;
-                    await context.Response.WriteAsync($"Error: {error}\n");
-                });
-            });
-
             cache.Set("mot", "Chee nano!");
+            
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseRouting();
 
