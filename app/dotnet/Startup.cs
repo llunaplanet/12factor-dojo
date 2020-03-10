@@ -1,12 +1,9 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Diagnostics;
 
 namespace dotnet
 {
@@ -31,7 +28,7 @@ namespace dotnet
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMemoryCache cache)
         {
             cache.Set("mot", "Chee nano!");
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
