@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using ServiceStack.Redis;
+using dotnet.Services;
 
 namespace dotnet
 {
@@ -41,7 +42,7 @@ namespace dotnet
                 return new RedisClient();
             });
             
-            services.AddSingleton<Services.IQueueService, Services.QueueService>();
+            services.AddSingleton<IQueueService, QueueService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
