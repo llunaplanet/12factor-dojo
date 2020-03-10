@@ -38,7 +38,7 @@ services:
     environment:
       - PORT=80
       - MOT=¿Qué pasa pisha?
-      - REDIS_URI=redis://:passwordRedis@redis/0
+      - REDIS_URI=redis://redis/0
 
     labels:
       - "traefik.enable=true"
@@ -49,4 +49,3 @@ services:
   
   redis:
     image: "redis:5.0-alpine"
-    command: --requirepass passwordRedis

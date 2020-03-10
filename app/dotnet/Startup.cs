@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using ServiceStack.Redis;
 using dotnet.Services;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace dotnet
 {
@@ -25,19 +26,20 @@ namespace dotnet
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddMemoryCache();
 
             services.AddSingleton<RedisClient>(ser => 
             {
                 string connectionStringRedis = Environment.GetEnvironmentVariable("REDIS_URI") ?? String.Empty;
-                Regex regex = new Regex(@"redis://:(?<password>[\w\-]+)@(?<server>[\w\-]+)/", RegexOptions.None);
+                Regex regex = new Regex(@"redis://(?<password>:[\w\-]+@)*(?<server>[\w\-]+)(?<port>:[\d]+)*/");
                 Match match = regex.Match(connectionStringRedis);
                 if (match.Success)
                 {
                     string server = match.Result("${server}");
-                    string password = match.Result("${password}");
-
-                    return new RedisClient(server, 6379, password);
+                    string password = string.IsNullOrEmpty(match.Result("${password}")) ? "" : match.Result("${password}")[1..^1];
+                    int port = string.IsNullOrEmpty(match.Result("${port}")) ? 6379 : Int32.Parse(match.Result("${port}")[1..]);
+                    return new RedisClient(server, port, password);
                 }
                 return new RedisClient();
             });
@@ -48,11 +50,24 @@ namespace dotnet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMemoryCache cache)
         {
-            string entorno = Configuration.GetValue<string>("Entorno");
-            if (env.IsDevelopment())
+            app.UseExceptionHandler(errorHandler => 
             {
-                app.UseDeveloperExceptionPage();
-            }
+                errorHandler.Run(async context =>
+                {
+                    var ex = context.Features.Get<IExceptionHandlerPathFeature>();
+                    string error = "Error";
+
+                    if (ex?.Error != null)
+                    {
+                        error  = ex.Error.Message;
+                    }
+                    
+                    Console.WriteLine(error);
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync($"Url: {context.Request.Path}\n");;
+                    await context.Response.WriteAsync($"Error: {error}\n");
+                });
+            });
 
             cache.Set("mot", Environment.GetEnvironmentVariable("MOT"));
 
@@ -61,7 +76,6 @@ namespace dotnet
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGet("index.html", new RequestDelegate(res => res.Response.WriteAsync($"Saludos desde el entorno [{entorno}]!\n")));
             });
         }
     }

@@ -13,6 +13,10 @@ namespace dotnet
     {
         public static void Main(string[] args)
         {
+            if (Environment.GetEnvironmentVariable("ENVIRONMENT") != null)
+            {
+                Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", Environment.GetEnvironmentVariable("ENVIRONMENT"));
+            }
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -20,6 +24,8 @@ namespace dotnet
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+
+
                     webBuilder.UseUrls($"http://*:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
                     webBuilder.UseStartup<Startup>();
                 });
