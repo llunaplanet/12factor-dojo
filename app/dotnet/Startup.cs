@@ -69,7 +69,7 @@ namespace dotnet
                 });
             });
 
-            cache.Set("mot", Environment.GetEnvironmentVariable("MOT"));
+            cache.Set("mot", "Chee nano!");
 
             app.UseRouting();
 
