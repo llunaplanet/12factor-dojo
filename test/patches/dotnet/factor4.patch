@@ -1,0 +1,65 @@
+diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
+index af133b6..f07b331 100644
+--- a/app/dotnet/Controllers/Server.cs
++++ b/app/dotnet/Controllers/Server.cs
+@@ -1,7 +1,9 @@
++using System;
+ using Microsoft.AspNetCore.Mvc;
+ using Microsoft.Extensions.Caching.Memory;
+ using Microsoft.Extensions.Configuration;
+ using Microsoft.AspNetCore.Http;
++using ServiceStack.Redis;
+ 
+ namespace dotnet.Controllers
+ {
+@@ -28,6 +30,17 @@ namespace dotnet.Controllers
+         ///
+         /// Test 4
+         ///
++        [HttpGet]
++        [Route("masuno")]
++        public IActionResult masuno([FromServices] RedisClient redisClient)
++        {
++            int masuno = 0;
++            Int32.TryParse(redisClient.Get<string>("masuno"), out masuno);
++            masuno++;
++            redisClient.Set<string>("masuno", masuno.ToString());
++
++            return Ok($"Contador: {masuno}");
++        }
+ 
+         ///
+         /// Test 6
+diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
+index f714d69..cbc2a3e 100644
+--- a/app/dotnet/Startup.cs
++++ b/app/dotnet/Startup.cs
+@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
+ using Microsoft.Extensions.DependencyInjection;
+ using Microsoft.Extensions.Hosting;
+ using Microsoft.Extensions.Caching.Memory;
++using ServiceStack.Redis;
+ 
+ namespace dotnet
+ {
+@@ -22,6 +23,8 @@ namespace dotnet
+             services.AddControllers();
+ 
+             services.AddMemoryCache();
++
++            services.AddSingleton<RedisClient>(_ => new RedisClient("redis", 6379, "foobared"));
+         }
+ 
+         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+diff --git a/app/dotnet/dotnet.csproj b/app/dotnet/dotnet.csproj
+index 2209443..103ed39 100644
+--- a/app/dotnet/dotnet.csproj
++++ b/app/dotnet/dotnet.csproj
+@@ -5,6 +5,7 @@
+   </PropertyGroup>
+ 
+   <ItemGroup>
++    <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
+   </ItemGroup>
+ 
+ </Project>
