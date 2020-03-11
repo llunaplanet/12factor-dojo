@@ -23,7 +23,7 @@ services:
     environment:
       - PORT=80
       - MOT=Aupaaaa!
-      - REDIS_URI=redis://:passwordRedis@redis/0
+      - REDIS_URI=redis://redis/0
       - DEBUG=http
     labels:
       - "traefik.enable=true"
