@@ -8,6 +8,13 @@ namespace dotnet.Controllers
     [ApiController]
     public class ServerController : ControllerBase
     {
+        [HttpGet]
+        [Route("index.html")]
+        public IActionResult index()
+        {
+            return Ok($"Saludos desde el entorno [Development]!\n");
+        }
+
         ///
         /// Test 3
         ///
@@ -20,10 +27,6 @@ namespace dotnet.Controllers
 
         ///
         /// Test 4
-        ///
-
-        ///
-        /// Test 5
         ///
 
         ///
