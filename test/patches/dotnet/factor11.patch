@@ -1,13 +1,8 @@
 diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
-index 8578365..9c41efa 100644
+index b8d8eb6..a9e142b 100644
 --- a/app/dotnet/Controllers/Server.cs
 +++ b/app/dotnet/Controllers/Server.cs
-@@ -59,11 +59,17 @@ namespace dotnet.Controllers
-         {
-             return Ok(HttpContext.Session.GetString("user_name"));
-         }
--        
-+
+@@ -63,7 +63,12 @@ namespace dotnet.Controllers
          ///
          /// Test 11
          ///
@@ -18,12 +13,11 @@ index 8578365..9c41efa 100644
 +        {
 +            throw new Exception("Toma un 500!");
 +        }
-+        
          ///
          /// Test 9
          /// 
 diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
-index d74c96b..151f352 100644
+index d74c96b..4f5ea01 100644
 --- a/app/dotnet/Startup.cs
 +++ b/app/dotnet/Startup.cs
 @@ -5,6 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
@@ -62,7 +56,7 @@ index d74c96b..151f352 100644
 +                    errorHandler.Run(async context => {
 +                        var ex = context.Features.Get<IExceptionHandlerPathFeature>();
 +                        ILogger<object> logger = context.RequestServices.GetService<ILogger<object>>();
-+ 
++
 +                        logger?.LogError(ex?.Error?.Message);
 +                        context.Response.StatusCode = 500;
 +                        await context.Response.WriteAsync($"Url: {context.Request.Path}\n");;

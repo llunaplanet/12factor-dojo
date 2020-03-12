@@ -1,5 +1,5 @@
 diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
-index 9c41efa..acbe128 100644
+index a9e142b..d626f25 100644
 --- a/app/dotnet/Controllers/Server.cs
 +++ b/app/dotnet/Controllers/Server.cs
 @@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
@@ -10,12 +10,7 @@ index 9c41efa..acbe128 100644
  
  namespace dotnet.Controllers
  {
-@@ -69,9 +70,16 @@ namespace dotnet.Controllers
-         {
-             throw new Exception("Toma un 500!");
-         }
--        
-+
+@@ -72,5 +73,12 @@ namespace dotnet.Controllers
          ///
          /// Test 9
          /// 
@@ -29,7 +24,7 @@ index 9c41efa..acbe128 100644
      }
  }
 diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
-index 151f352..f96961b 100644
+index 4f5ea01..5d1935c 100644
 --- a/app/dotnet/Startup.cs
 +++ b/app/dotnet/Startup.cs
 @@ -11,6 +11,7 @@ using Serilog.Formatting.Compact;
