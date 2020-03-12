@@ -1,8 +1,13 @@
 diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
-index d257c1b..014e7e1 100644
+index 8578365..9c41efa 100644
 --- a/app/dotnet/Controllers/Server.cs
 +++ b/app/dotnet/Controllers/Server.cs
-@@ -63,7 +63,13 @@ namespace dotnet.Controllers
+@@ -59,11 +59,17 @@ namespace dotnet.Controllers
+         {
+             return Ok(HttpContext.Session.GetString("user_name"));
+         }
+-        
++
          ///
          /// Test 11
          ///
@@ -18,7 +23,7 @@ index d257c1b..014e7e1 100644
          /// Test 9
          /// 
 diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
-index bc69525..0ebe03e 100644
+index d74c96b..151f352 100644
 --- a/app/dotnet/Startup.cs
 +++ b/app/dotnet/Startup.cs
 @@ -5,6 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
@@ -34,31 +39,30 @@ index bc69525..0ebe03e 100644
  
  namespace dotnet
  {
-@@ -27,6 +33,13 @@ namespace dotnet
-             services.AddDistributedMemoryCache();
-             services.AddSession();
- 
+@@ -44,6 +50,12 @@ namespace dotnet
+             ///
+             /// Test 11
+             ///
 +            services.AddLogging(conf => {
-+               conf.ClearProviders();
-+               conf.AddSerilog(new LoggerConfiguration()
++                conf.ClearProviders();
++                conf.AddSerilog(new LoggerConfiguration()
 +                    .WriteTo.File(new CompactJsonFormatter(), "error.log", LogEventLevel.Error)
 +                    .CreateLogger());
 +            });
-+
-             services.AddSingleton<RedisClient>(_ => new RedisClient("redis", 6379, "foobared"));
-         }
- 
-@@ -39,7 +52,21 @@ namespace dotnet
-             {
-                 app.UseDeveloperExceptionPage();
-             }
+             ///
+             /// Test 11
+             ///
+@@ -68,6 +80,20 @@ namespace dotnet
+             ///
+             /// Test 11
+             ///
 +            else
 +            {
 +                app.UseExceptionHandler(errorHandler => {
 +                    errorHandler.Run(async context => {
 +                        var ex = context.Features.Get<IExceptionHandlerPathFeature>();
 +                        ILogger<object> logger = context.RequestServices.GetService<ILogger<object>>();
- 
++ 
 +                        logger?.LogError(ex?.Error?.Message);
 +                        context.Response.StatusCode = 500;
 +                        await context.Response.WriteAsync($"Url: {context.Request.Path}\n");;
@@ -66,19 +70,18 @@ index bc69525..0ebe03e 100644
 +                    });
 +                });
 +            }
-+            
-             app.UseSession();
- 
-             app.UseRouting();
+             ///
+             /// Test 11
+             ///
 diff --git a/app/dotnet/dotnet.csproj b/app/dotnet/dotnet.csproj
-index 103ed39..416261a 100644
+index 103ed39..1d38fa6 100644
 --- a/app/dotnet/dotnet.csproj
 +++ b/app/dotnet/dotnet.csproj
-@@ -5,6 +5,7 @@
-   </PropertyGroup>
+@@ -6,6 +6,7 @@
  
    <ItemGroup>
-+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
      <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
++    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
    </ItemGroup>
  
+ </Project>

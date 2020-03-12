@@ -1,5 +1,5 @@
 diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
-index 014e7e1..19ebc13 100644
+index 9c41efa..acbe128 100644
 --- a/app/dotnet/Controllers/Server.cs
 +++ b/app/dotnet/Controllers/Server.cs
 @@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
@@ -10,7 +10,12 @@ index 014e7e1..19ebc13 100644
  
  namespace dotnet.Controllers
  {
-@@ -73,5 +74,12 @@ namespace dotnet.Controllers
+@@ -69,9 +70,16 @@ namespace dotnet.Controllers
+         {
+             throw new Exception("Toma un 500!");
+         }
+-        
++
          ///
          /// Test 9
          /// 
@@ -24,7 +29,7 @@ index 014e7e1..19ebc13 100644
      }
  }
 diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
-index 0ebe03e..043ac51 100644
+index 151f352..f96961b 100644
 --- a/app/dotnet/Startup.cs
 +++ b/app/dotnet/Startup.cs
 @@ -11,6 +11,7 @@ using Serilog.Formatting.Compact;
@@ -35,10 +40,10 @@ index 0ebe03e..043ac51 100644
  
  namespace dotnet
  {
-@@ -41,6 +42,18 @@ namespace dotnet
-             });
- 
-             services.AddSingleton<RedisClient>(_ => new RedisClient("redis", 6379, "foobared"));
+@@ -63,6 +64,18 @@ namespace dotnet
+             ///
+             /// Test 9
+             ///
 +            services.AddSingleton<IConnection>(services => {
 +                Options options = ConnectionFactory.GetDefaultOptions();
 +                options.Url = System.Environment.GetEnvironmentVariable("NATS_URI");
@@ -51,18 +56,18 @@ index 0ebe03e..043ac51 100644
 +                ConnectionFactory connectionFactory = new ConnectionFactory();
 +                return connectionFactory.CreateConnection();
 +            });
-         }
- 
-         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+             ///
+             /// Test 9
+             ///
 diff --git a/app/dotnet/dotnet.csproj b/app/dotnet/dotnet.csproj
-index 416261a..68255f1 100644
+index 1d38fa6..b9ef51e 100644
 --- a/app/dotnet/dotnet.csproj
 +++ b/app/dotnet/dotnet.csproj
-@@ -5,6 +5,7 @@
-   </PropertyGroup>
- 
+@@ -7,6 +7,7 @@
    <ItemGroup>
-+    <PackageReference Include="NATS.Client" Version="0.10.0" />
-     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
      <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
+     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
++    <PackageReference Include="NATS.Client" Version="0.10.0" />
    </ItemGroup>
+ 
+ </Project>

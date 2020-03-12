@@ -1,11 +1,12 @@
 diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
-index f07b331..d257c1b 100644
+index f07b331..8578365 100644
 --- a/app/dotnet/Controllers/Server.cs
 +++ b/app/dotnet/Controllers/Server.cs
 @@ -45,7 +45,21 @@ namespace dotnet.Controllers
          ///
          /// Test 6
          ///
+-
 +        [HttpGet]
 +        [Route("/diminombre")]
 +        public IActionResult diminombre(string nombre)
@@ -13,7 +14,7 @@ index f07b331..d257c1b 100644
 +            HttpContext.Session.SetString("user_name", nombre);
 +            return Ok($"Hola {nombre}, encantado de conocerte");
 +        }
- 
++ 
 +        [HttpGet]
 +        [Route("/quiensoy")]
 +        public IActionResult quiensoy()
@@ -25,25 +26,23 @@ index f07b331..d257c1b 100644
          /// Test 11
          ///
 diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
-index cbc2a3e..bc69525 100644
+index a806c87..d74c96b 100644
 --- a/app/dotnet/Startup.cs
 +++ b/app/dotnet/Startup.cs
-@@ -24,6 +24,9 @@ namespace dotnet
- 
-             services.AddMemoryCache();
- 
+@@ -35,6 +35,8 @@ namespace dotnet
+             ///
+             /// Test 6
+             ///
 +            services.AddDistributedMemoryCache();
 +            services.AddSession();
-+
-             services.AddSingleton<RedisClient>(_ => new RedisClient("redis", 6379, "foobared"));
-         }
- 
-@@ -37,6 +40,8 @@ namespace dotnet
-                 app.UseDeveloperExceptionPage();
-             }
- 
+             ///
+             /// Test 6
+             ///
+@@ -73,6 +75,7 @@ namespace dotnet
+             ///
+             /// Test 6
+             ///
 +            app.UseSession();
-+
-             app.UseRouting();
- 
-             app.UseEndpoints(endpoints =>
+             ///
+             /// Test 6
+             ///
