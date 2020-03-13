@@ -24,7 +24,7 @@ index a9e142b..d626f25 100644
      }
  }
 diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
-index 4f5ea01..5d1935c 100644
+index 4f5ea01..1db40a3 100644
 --- a/app/dotnet/Startup.cs
 +++ b/app/dotnet/Startup.cs
 @@ -11,6 +11,7 @@ using Serilog.Formatting.Compact;
@@ -49,7 +49,7 @@ index 4f5ea01..5d1935c 100644
 +                    logger.LogError(e.Error);
 +                };
 +                ConnectionFactory connectionFactory = new ConnectionFactory();
-+                return connectionFactory.CreateConnection();
++                return connectionFactory.CreateConnection(options);
 +            });
              ///
              /// Test 9
