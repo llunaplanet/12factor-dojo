@@ -77,13 +77,13 @@ Start by executing the first test with the following command:
 $ make test3
 ```
 
-Remeber that the objective is for the tests to pass and become green. Read the test result and think how you can modify the app in such a way that the test passes. In some cases there is more than one solution.
+Remember that the objective is for the tests to pass and become green. Read the test result and think how you can modify the app in such a way that the test passes. In some cases there is more than one solution.
 
 > You can explore the test environment ( docker-compose files ) in the `test/scenarios` folder, and the tests themselves in the `test/spec` folder
 
 ### Troubleshooting
 
-You can use the built in `logs <factor number>` command to check the docker-compose output, sometimes you will see some errors in the test output that are not very friendly/descriptive and it's necesary to dig a little deeper, so this command will help you with that.
+You can use the built in `logs <factor number>` command to check the docker-compose output, sometimes you will see some errors in the test output that are not very friendly/descriptive and it's necessary to dig a little deeper, so this command will help you with that.
 
 For cleaning the logs, use `clean <factor number>` command
 
@@ -93,7 +93,7 @@ This is the actual list of katakoans and the command that triggers each test:
 
 > IMPORTANT: The exercises have been designed to be completed in order
 
-> IMPORTANT: In some of the katakoans you will need to execute an extra command to add new functionality to the app's code, this may cause some git trouble, but this is also useful to pratice your git-fu ;)
+> IMPORTANT: In some of the katakoans you will need to execute an extra command to add new functionality to the app's code, this may cause some git trouble, but this is also useful to practice your git-fu ;)
 
  - III. Store config in the environment    
 	 - `make test3`
@@ -102,7 +102,7 @@ This is the actual list of katakoans and the command that triggers each test:
    - `make test4`
  - V. Strictly separate build and run stages
    - `make test5`
- - VI. Procceses
+ - VI. Processes
    - `make patch6` ( Execute only once )
    - `make test6`
  - XI. Treat logs as event streams
@@ -112,9 +112,9 @@ This is the actual list of katakoans and the command that triggers each test:
    - `make patch9` ( Execute only once )
    - `make test9`
    
-Once you have completed all the exercices individually you can execute `make test-all` to run the complete test suite in one run.
+Once you have completed all the exercises individually you can execute `make test-all` to run the complete test suite in one run.
 
 ### Some restrictions
 
 - The only code you can modify are the files in the `app` folder, if you modify any other file, you are cheating! 
-- Some katakoans have aditional restrictions
+- Some katakoans have additional restrictions
