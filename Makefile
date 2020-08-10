@@ -19,6 +19,7 @@ create-dind:
 		--privileged \
 		--network-alias dind \
 		--name dind \
+		-e DOCKER_TLS_CERTDIR="" \
 		docker:19.03-dind --storage-driver overlay2
 
 start-dind:
