@@ -16,31 +16,31 @@ The exercices have kind of koan spirit, as for each **12 factor** there is a tes
 
 The exercices feels also like a kata, because there is not a single solution and there are some restrictions to take into consideration for solving the exercise.
 
-From here, we are going to call the execises **katakoans** ( we accept sugerences on the name :) )
+From here, we are going to call the exercises **katakoans** ( fancier suggestions welcome :) )
 
 ## How does this work?
 
-Ok so, in one hand we have a very simple app, an http endpoint that it's not **12 factor** compliant, in the other hand we have a test harness, with a series of tests that covers each one of the **12 factors*, ( one or multiple tests for each factor ). 
+Ok so, on one hand we have a very simple app, an http endpoint that's not **12 factor** compliant, on the other hand we have a test harness, with a series of tests that covers each one of the **12 factors*, ( one or multiple tests for each factor ). 
 
-The objective is to modify the provided application so all the tests are green, meaning that the app is then **12 factor** compliant.
+The objective is to modify the provided application so all the tests are green, meaning that the app becomes **12 factor** compliant.
 
-It is important to do the katakoans in order and one by one, the order is important as there are some factors easier to undestan/assimilate/apply when you already completed some others first.
+It is important to do the katakoans in order and one by one, the order is important as there are some factors easier to understand/assimilate/apply after you already completed the previous ones first.
 
 ### Behind the scenes
 
-The **12 factor** dojo's flow is managed by a test harness based on docker-compose and **RSpec**, it will build a docker image with the app, we will call this image the SUT ( Subject Under Test ), then the harness will spin up a docker test environment with all required dependencies and it will run a seires of tests against the SUT image that will validate if it's 12 factor compliant.
+The **12 factor** dojo's flow is managed by a test harness based on docker-compose and **RSpec**. It will build a docker image with the app and we shall call this image the SUT ( Subject Under Test ). Afterwards, the harness will spin up a docker test environment with all required dependencies and it will run a series of tests against the SUT image that will validate if it's 12 factor compliant or not.
 
-Tests run in an always fresh docker environment using DIND ( Docker In Docker )
+Tests always run in an fresh docker environment using DIND ( Docker In Docker ).
 
 ## Which DevOps-fu 🥋 level is needed to complete the katakoans?
 
-As in every dojo, all DevOps-fu 🥋 levels are welcomed, but there are some exercices that deals with advanced concepts, so don't hesitate to ask for help if you need to.
+As in every dojo, all DevOps-fu 🥋 levels are welcome, but there are some exercices that deal with advanced concepts, so don't hesitate to ask for help if you need to.
 
 ## What do I need to start?
 
-You only need to have Docker 🐳 and some code editor installed in your machine to be able to execute and validate the exercises.
+You only need to have Docker 🐳 and some code editor installed on your machine to be able to execute and validate the exercises.
 
-Also it's is highly recommended to have read 🤓 the **12 factor** first.
+Additionally, it's highly recommended to have read 🤓 the **12 factors** first.
 
 ## Hajime!! ( let's go )
 
@@ -76,8 +76,8 @@ Start by executing the first test with the following command:
 ```
 $ make test3
 ```
-El objetivo es que el test pase en verde, lee el resultado y piensa cómo puedes modificar la aplicación para conseguirlo, en algunos casos no hay una sola solución. 
-Remeber that the objective is the tests to pass a go green, so read the test result and think how can you modify the app for the test to pass, in some cases there is not only one solution.
+
+Remeber that the objective is for the tests to pass and become green. Read the test result and think how you can modify the app in such a way that the test passes. In some cases there is more than one solution.
 
 > You can explore the test environment ( docker-compose files ) in the `test/scenarios` folder, and the tests themselves in the `test/spec` folder
 
