@@ -19,7 +19,7 @@ create-dind:
 		--privileged \
 		--network-alias dind \
 		--name dind \
-		docker:18.06-dind --storage-driver overlay2
+		docker:19.03-dind --storage-driver overlay2
 
 start-dind:
 	docker start dind
