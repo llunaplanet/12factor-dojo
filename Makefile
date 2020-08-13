@@ -41,6 +41,7 @@ start-executor:
 	docker run -it --rm \
 		-e DOCKER_HOST=tcp://$$DIND_HOST:2375 \
 		-v $$PWD:/dojo \
+		-u $$(id -u):$$(id -g) \
 		-w /dojo \
 		executor
 
