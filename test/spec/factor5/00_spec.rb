@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe "V. Strictly separate build and run stages" do
-  
-  it "El entorno de staging nos saluda" do
+
+  it "Staging environment greets us" do
     response = HTTParty.get('http://sut-a/index.html')
     expect(response.code).to eq(200)
-    expect(response.body).to eq("Saludos desde el entorno [staging]!\n")
+    expect(response.body).to eq("Greetings from the [staging] environment!\n")
   end
-  
-  it "El entorno de qa nos saluda" do
+
+  it "QA environment greets us" do
     response = HTTParty.get('http://sut-b/index.html')
     expect(response.code).to eq(200)
-    expect(response.body).to eq("Saludos desde el entorno [qa]!\n")
+    expect(response.body).to eq("Greetings from the [qa] environment!\n")
   end
 
 end

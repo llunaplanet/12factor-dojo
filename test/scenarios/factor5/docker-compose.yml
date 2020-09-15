@@ -6,13 +6,13 @@ services:
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - ENVIRONMENT=staging
-  
+
   sut-b:
     image: sut
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - ENVIRONMENT=qa

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'Saludos desde el entorno [development]!' > ./public/index.html"
+    "build": "echo 'Greetings from the [development] environment!' > ./public/index.html"
   },
   "keywords": [],
   "author": "",
