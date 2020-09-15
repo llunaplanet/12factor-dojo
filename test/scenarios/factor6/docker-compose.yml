@@ -1,6 +1,6 @@
 version: '3'
 services:
-  
+
   proxy:
     image: traefik:1.7-alpine
     command: [
@@ -22,7 +22,7 @@ services:
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - REDIS_URI=redis://redis/0
       - DEBUG=http
     labels:
@@ -31,7 +31,7 @@ services:
       - "traefik.frontend.backend=sut"
       - "traefik.backend=sut"
       - "traefik.port=80"
-  
+
   sut-b:
     image: sut
     stop_signal: SIGKILL
@@ -46,6 +46,6 @@ services:
       - "traefik.frontend.backend=sut"
       - "traefik.backend=sut"
       - "traefik.port=80"
-  
+
   redis:
     image: "redis:5.0-alpine"
