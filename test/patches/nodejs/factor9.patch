@@ -7,16 +7,16 @@ index 121dd09..5b336bc 100755
  const redis = require("redis");
  const winston = require('winston');
 +const nats = require('nats');
- 
+
  const error_logger = winston.createLogger({
    level: 'error',
 @@ -31,6 +32,17 @@ redis_client.on("ready", function (err) {
-   redis_client.set("masuno", 0);
+   redis_client.set("plusone", 0);
  });
- 
+
 +var nc = nats.connect({
 +  'url': process.env.NATS_URI,
-+  'maxReconnectAttempts': -1, 
++  'maxReconnectAttempts': -1,
 +  'reconnectTimeWait': 250,
 +  'waitOnFirstConnect': true
 +});
@@ -28,14 +28,14 @@ index 121dd09..5b336bc 100755
  /**
   * App Variables
   */
-@@ -93,6 +105,14 @@ app.get("/quiensoy", (req, res) => {
+@@ -93,6 +105,14 @@ app.get("/whoami", (req, res) => {
  * Rutas para el factor9
  */
- 
-+app.get("/encolame", (req, res) => {
-+  
+
++app.get("/enqueue", (req, res) => {
++
 +  nc.publish('foo', 'Hello World!', function() {
-+    res.status(200).send("Mensaje enviado a la cola");
++    res.status(200).send("Message sent to the queue");
 +  });
 +
 +});

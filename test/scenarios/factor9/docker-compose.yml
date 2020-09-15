@@ -1,29 +1,29 @@
 version: '3'
 services:
-  
+
   sut-a:
     image: sut
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - REDIS_URI=redis://:passwordA@redis-a/0
       - NATS_URI=nats://nats:4222
-      
+
   sut-b:
     image: sut
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - REDIS_URI=redis://:passwordA@redis-a/0
       - NATS_URI=nats://nats-slow:4222
-  
+
   redis-a:
     image: "redis:5.0-alpine"
     command: --requirepass passwordA
-    
+
   nats:
     image: nats:alpine
-  
+
   nats-slow:
     build: ../../dockerfiles/slownats
     stop_signal: SIGKILL
