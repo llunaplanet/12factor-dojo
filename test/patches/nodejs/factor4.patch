@@ -18,23 +18,23 @@ index fef0510..2f18a77 100755
 +});
 +
 +redis_client.on("ready", function (err) {
-+  redis_client.set("masuno", 0);
++  redis_client.set("plusone", 0);
 +});
- 
+
  /**
   * App Variables
-@@ -44,6 +58,14 @@ app.get("/saludos", (req, res) => {
+@@ -44,6 +58,14 @@ app.get("/greetings", (req, res) => {
  /**
   * Rutas para el factor4
   */
-+ 
-+app.get("/masuno", (req, res) => {
-+  redis_client.get("masuno", function(err, masuno) {
-+    masuno++
-+    redis_client.set("masuno", masuno);
-+    res.status(200).send("Contador: " + masuno);
++
++app.get("/plusone", (req, res) => {
++  redis_client.get("plusone", function(err, plusone) {
++    plusone++
++    redis_client.set("plusone", plusone);
++    res.status(200).send("Counter: " + plusone);
 +  });
 +});
- 
+
  /**
   * Rutas para el factor6

@@ -6,23 +6,23 @@ services:
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - ENVIRONMENT=staging
       - REDIS_URI=redis://:passwordA@redis-a/0
-  
+
   sut-b:
     image: sut
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - ENVIRONMENT=qa
       - REDIS_URI=redis://:passwordB@redis-b/0
-      
+
   redis-a:
     image: "redis:5.0-alpine"
     command: --requirepass passwordA
-    
+
   redis-b:
     image: "redis:4.0-alpine"
     command: --requirepass passwordB

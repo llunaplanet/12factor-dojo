@@ -6,7 +6,7 @@ services:
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=What's Up!
+      - MOT=What's Up?
 
   sut-b:
     image: sut
