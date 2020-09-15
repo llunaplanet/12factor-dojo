@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe "III. Store config in the environment" do
-  
-  it "Espero un MOT en vasco" do
-    response = HTTParty.get('http://sut-a/saludos', timeout: 2)
+
+  it "I expect a MOT in English" do
+    response = HTTParty.get('http://sut-a/greetings', timeout: 2)
     expect(response.code).to eq(200)
-    expect(response.body).to eq("Aupaaaa!")
+    expect(response.body).to eq("What's Up?")
   end
-  
-  it "Espero un MOT en andalú" do
-    response = HTTParty.get('http://sut-b/saludos', timeout: 2)
+
+  it "I expect a MOT in Spanish" do
+    response = HTTParty.get('http://sut-b/greetings', timeout: 2)
     expect(response.code).to eq(200)
     expect(response.body).to eq("¿Qué pasa pisha?")
   end

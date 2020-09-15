@@ -23,7 +23,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.set("mot", "Cheee nano!")
+app.set("mot", "Hellow World!")
 
 app.use(
   session({
@@ -37,7 +37,7 @@ app.use(
  * Routes Definitions
  */
 
-app.get("/saludos", (req, res) => {
+app.get("/greetings", (req, res) => {
   res.status(200).send(app.get("mot"));
 });
 
