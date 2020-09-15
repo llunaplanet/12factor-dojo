@@ -15,20 +15,20 @@ index efb73cb..4547631 100755
 +    new winston.transports.File({ filename: 'error.log'})
 +  ]
 +});
- 
+
  /**
   * External services configuration
-@@ -88,6 +97,15 @@ app.get("/quiensoy", (req, res) => {
+@@ -88,6 +97,15 @@ app.get("/whoami", (req, res) => {
  * Rutas para el factor11
  */
- 
-+app.get("/dameun500", (req, res) => {
-+  throw new Error('Toma un 500!');
+
++app.get("/givemea500", (req, res) => {
++  throw new Error('Here is your 500!');
 +});
 +
 +app.use(function(err, req, res, next) {
 +  error_logger.error(err.stack);
-+  res.status(500).send('Toma 500!');
++  res.status(500).send('Here is your 500!');
 +});
 +
  /**

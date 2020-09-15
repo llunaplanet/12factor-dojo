@@ -6,8 +6,8 @@ services:
     stop_signal: SIGKILL
     environment:
       - PORT=80
-      - MOT=Aupaaaa!
+      - MOT=What's Up?
       - REDIS_URI=redis://redis/0
-  
+
   redis:
     image: "redis:5.0-alpine"
