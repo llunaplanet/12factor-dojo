@@ -1,125 +1,120 @@
-# Bienvenidos al dojo 🏯 de 12 factor
+# Welcome to the **12 factor** dojo 🏯 !
 
-Aquí encontrarás algunos ejercicios, mezcla entre katas y koans con las que practicar tu DevOps-fu 🥋, mejorar tus habilidades y ganar experiencia. 
+Here you will find some exercises for practicing your DevOps-fu 🥋, improve your skills and gain experience.
 
 ## The twelve-factor app
 
-Se trata de una metodología para construir aplicaciones y no puede faltar en nuestra caja de herramientas DevOps. Pásate por https://12factor.net/es/ que lo explica muy bien
+It's a methodology for building software-as-a-service apps, and it's a must in your DevOps toolbox. Check https://12factor.net/ for more information, it has some background and a detailed explanation each one of the 12 practices.
 
-## Los ejercicios
+## The exercises
 
-Los ejercicios que aquí proponemos te ayudarán a entender de forma práctica los principios de **12 factor**
+The proposed exercises will help you to understand the practices desribed by **12 factor** in a practical way.
 
-### Katas o Koans?
+### Katas or Koans?
 
-Los ejercicios tienen espíritu de Koan, ya que para cada principio existe un test que sólo va a pasar en verde una vez se ha comprendido y aplicado lo que el principio trata de enseñarnos.
+The exercices have kind of koan spirit, as for each **12 factor** there is a test that is going to pass once the the factor has been understood and applied to the code.
 
-Los ejercicios tienen también aire de Kata ya que no hay una sola solución para el problema, y hay una serie de restricciones al aplicar la solución.
+The exercices feels also like a kata, because there is not a single solution and there are some restrictions to take into consideration for solving the exercise.
 
-A partir de aquí los llamaremos katakoan ( se aceptan sugerencias : )
+From here, we are going to call the exercises **katakoans** ( fancier suggestions welcome :) )
 
-## ¿Cómo funciona?
+## How does this work?
 
-Tenemos por un lado una serie de tests que cubren cada uno de los principios de 12-factor, (uno o varios por cada principio ) y por otro lado tenemos una aplicación que deberemos modificar.
+Ok so, on one hand we have a very simple app, an http endpoint that's not **12 factor** compliant, on the other hand we have a test harness, with a series of tests that covers each one of the **12 factors*, ( one or multiple tests for each factor ). 
 
-### El objetivo
+The objective is to modify the provided application so all the tests are green, meaning that the app becomes **12 factor** compliant.
 
-Deberemos ir modificando la aplicación para hacerla compatible con **12 factor** de forma que los tests pasen.
+It is important to do the katakoans in order and one by one, the order is important as there are some factors easier to understand/assimilate/apply after you already completed the previous ones first.
 
-Deberemos ir haciendo las katakoans de una en una por orden ( el orden es importante ya que hay algunos principios de **12 factor** son más fáciles de comprender/asimilar/aplicar cuando ya se han comprendido algunos otros primero )
+### Behind the scenes
 
-### Entre bastidores
+The **12 factor** dojo's flow is managed by a test harness based on docker-compose and **RSpec**. It will build a docker image with the app and we shall call this image the SUT ( Subject Under Test ). Afterwards, the harness will spin up a docker test environment with all required dependencies and it will run a series of tests against the SUT image that will validate if it's 12 factor compliant or not.
 
-El arnés de test se va a encargar, para cada uno de los tests, de **construir una imagen de docker** con la aplicación, a esta imagen que llamaremos SUT se le pasarán una serie de tests ( de caja negra ) que validarán si el SUT es compatible con 12 factor.
+Tests always run in an fresh docker environment using DIND ( Docker In Docker ).
 
-Los tests corren sobre una un entorno de docker totalmente aislado usando DIND ( Docker In Docker ). 
+## Which DevOps-fu 🥋 level is needed to complete the katakoans?
 
-Los tests usan docker-compose para declarar las dependencias del SUT en cada uno de los tests
+As in every dojo, all DevOps-fu 🥋 levels are welcome, but there are some exercices that deal with advanced concepts, so don't hesitate to ask for help if you need to.
 
-Los tests están descritos con **rspec**
+## What do I need to start?
 
-## ¿Qué nivel de DevOps-fu 🥋 hace falta?
+You only need to have Docker 🐳 and some code editor installed on your machine to be able to execute and validate the exercises.
 
-Como en todo dojo, todos los niveles de DevOps-fu 🥋son bienvenidos, aunque hay algunos ejercicios en los que se manejan conceptos avanzados.
+Additionally, it's highly recommended to have read 🤓 the **12 factors** first.
 
-## ¿Qué necesito para empezar?
+## Hajime!! ( let's go )
 
-Para empezar sólo necesitas tener instalado Docker 🐳 en tu equipo para poder ejecutar y validar los ejercicios.
-
-Bueno es interesante haber pegado una leída 🤓primero, aunque sea en diagonal, a los 12 principios antes de ponerse manos a la obra.
-
-## Hajime!! ( o manos a la obra )
-
-Clona el repositorio
+First clone this repository:
 
 ```
 git clone https://github.com/llunaplanet/12factor-dojo.git
 ```
-El siguiente comando va a preparar el entorno de test, va a crear el servicio DIND y a construir la imagen docker con las herramientas necesarias para lanzar los tests ( docker-compose, rspec ), 
 
-Ejecuta el siguiente comando:
+The following command is going to prepare the test environment, it's going to build some docker images with the tools needed to lauch the tests ( docker-compose, RSpec ):
+
 ```
 cd 12factor-dojo
 make setup
 ```
-El siguiente comando va a iniciar el entorno de test, va a crear el contenedor desde el cual lanzaremos los tests
+This command if going to start the test environment and prepare some helper tools:
 
-Ejecuta el siguiente comando:
 ```
 make hajime
 ```
-Por último, dado que estamos en un entorno DIND hemos de construir una ultima imagen y ya estaremos listos para empezar:
 
-Ejecuta el siguiente comando desde la shell del dojo ( /dojo # ):
+Finally, as we are inside a DIND environment, we need to build one last docker image and we will be ready to start.
+
+Execute the following command from the dojo's shell ( /dojo # ):
 
 ```
 make prepare
 ```
-En este momento ya estás listo para practicar las katakoans:
+So now you are set to start practicing the katakoans:
 
-Empieza ejecutando el primer test con el sihguiente comando:
+Start by executing the first test with the following command:
+
 ```
 $ make test3
 ```
-El objetivo es que el test pase en verde, lee el resultado y piensa cómo puedes modificar la aplicación para conseguirlo, en algunos casos no hay una sola solución. 
 
-> Puedes explorar el entorno de test ( archivos docker-compose ) en la carpeta `test/scenarios` y los tests en sí mismos en la carpeta `test/spec`
+Remember that the objective is for the tests to pass and become green. Read the test result and think how you can modify the app in such a way that the test passes. In some cases there is more than one solution.
 
-### Solución de problemas
+> You can explore the test environment ( docker-compose files ) in the `test/scenarios` folder, and the tests themselves in the `test/spec` folder
 
-Puedes usar el comando `logs <número de factor>` para ver la salida de docker-compose, a veces hay fallos que no son muy descriptivos en la salida del test y es necesario indagar un poco más.
+### Troubleshooting
 
-Para limpiar los logs usa `clean <número de factor>`
+You can use the built in `logs <factor number>` command to check the docker-compose output, sometimes you will see some errors in the test output that are not very friendly/descriptive and it's necessary to dig a little deeper, so this command will help you with that.
 
-### Listado de katakoans
+For cleaning the logs, use `clean <factor number>` command
 
-Este es el listado de las katakoans que hay actualmente junto con el comando que ejecuta su test.
+### The katakoans list
 
-> IMPORTANTE: Los ejercicios han sido diseñados para que se completen en este orden
+This is the actual list of katakoans and the command that triggers each test:
 
-> IMPORTANTE: En algunas de las katakoans deberás ejecutar un comando extra para añadir a la aplicación nuevas funcionalidades con las que trabajar, puede que esto cause algún conflicto con tu git, pero esto también es bueno para practicar tu git-fu ;)
+> IMPORTANT: The exercises have been designed to be completed in order
+
+> IMPORTANT: In some of the katakoans you will need to execute an extra command to add new functionality to the app's code, this may cause some git trouble, but this is also useful to practice your git-fu ;)
 
  - III. Store config in the environment    
 	 - `make test3`
  - IV. Backing services
-   - `make patch4` ( Ejecútalo sólo una vez )
+   - `make patch4` ( Execute only once )
    - `make test4`
  - V. Strictly separate build and run stages
    - `make test5`
- - VI. Procceses
-   - `make patch6` ( Ejecútalo sólo una vez )
+ - VI. Processes
+   - `make patch6` ( Execute only once )
    - `make test6`
  - XI. Treat logs as event streams
-   - `make patch11` ( Ejecútalo sólo una vez )
+   - `make patch11` ( Execute only once )
    - `make test11`
  - IX. Maximize robustness with fast startup and graceful shutdown
-   - `make patch9` ( Ejecútalo sólo una vez )
+   - `make patch9` ( Execute only once )
    - `make test9`
    
-Una vez hayas completado todos los ejercicios individualmente, ejecuta `make test-all` para pasar todos los tests en el mismo run
+Once you have completed all the exercises individually you can execute `make test-all` to run the complete test suite in one run.
 
-### Restricciones
+### Some restrictions
 
-- Lo único que se puede modificar es el contenido de la carpeta APP 
-- Algunas de las katakoan tienen restricciones extra
-- No se puede modificar ninguno de los archivos dentro de la carpeta "tests" 
+- The only code you can modify are the files in the `app` folder, if you modify any other file, you are cheating! 
+- Some katakoans have additional restrictions
