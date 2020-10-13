@@ -1,0 +1,48 @@
+diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
+index f07b331..8578365 100644
+--- a/app/dotnet/Controllers/Server.cs
++++ b/app/dotnet/Controllers/Server.cs
+@@ -45,7 +45,21 @@ namespace dotnet.Controllers
+         ///
+         /// Test 6
+         ///
+-
++        [HttpGet]
++        [Route("/diminombre")]
++        public IActionResult diminombre(string nombre)
++        {
++            HttpContext.Session.SetString("user_name", nombre);
++            return Ok($"Hola {nombre}, encantado de conocerte");
++        }
++ 
++        [HttpGet]
++        [Route("/quiensoy")]
++        public IActionResult quiensoy()
++        {
++            return Ok(HttpContext.Session.GetString("user_name"));
++        }
++        
+         ///
+         /// Test 11
+         ///
+diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
+index a806c87..d74c96b 100644
+--- a/app/dotnet/Startup.cs
++++ b/app/dotnet/Startup.cs
+@@ -35,6 +35,8 @@ namespace dotnet
+             ///
+             /// Test 6
+             ///
++            services.AddDistributedMemoryCache();
++            services.AddSession();
+             ///
+             /// Test 6
+             ///
+@@ -73,6 +75,7 @@ namespace dotnet
+             ///
+             /// Test 6
+             ///
++            app.UseSession();
+             ///
+             /// Test 6
+             ///

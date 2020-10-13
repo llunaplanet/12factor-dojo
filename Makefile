@@ -10,6 +10,10 @@ setup-nodejs:
 setup-go:
 	echo "Setting up [go] stack..."
 	@echo "go" > .sabor
+
+setup-dotnet:
+	echo "Setting up [ASP.NET Core] stack..."
+	@echo "dotnet" > .sabor
 	
 # Targets to manage the DIND ( Execute in the host )
 

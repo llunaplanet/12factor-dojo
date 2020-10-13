@@ -1,0 +1,68 @@
+diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
+index a9e142b..d626f25 100644
+--- a/app/dotnet/Controllers/Server.cs
++++ b/app/dotnet/Controllers/Server.cs
+@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
+ using Microsoft.Extensions.Configuration;
+ using Microsoft.AspNetCore.Http;
+ using ServiceStack.Redis;
++using NATS.Client;
+ 
+ namespace dotnet.Controllers
+ {
+@@ -72,5 +73,12 @@ namespace dotnet.Controllers
+         ///
+         /// Test 9
+         /// 
++        [HttpGet]
++        [Route("/encolame")]
++        public IActionResult encolame([FromServices] IConnection queueService)
++        {
++            queueService.Publish("foo", System.Text.Encoding.ASCII.GetBytes("Hello World!"));
++            return Ok("Mensaje enviado a la cola");
++        }
+     }
+ }
+diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
+index 4f5ea01..1db40a3 100644
+--- a/app/dotnet/Startup.cs
++++ b/app/dotnet/Startup.cs
+@@ -11,6 +11,7 @@ using Serilog.Formatting.Compact;
+ using Microsoft.AspNetCore.Diagnostics;
+ using Microsoft.AspNetCore.Http;
+ using Microsoft.Extensions.Logging;
++using NATS.Client;
+ 
+ namespace dotnet
+ {
+@@ -63,6 +64,18 @@ namespace dotnet
+             ///
+             /// Test 9
+             ///
++            services.AddSingleton<IConnection>(services => {
++                Options options = ConnectionFactory.GetDefaultOptions();
++                options.Url = System.Environment.GetEnvironmentVariable("NATS_URI");
++                options.MaxReconnect = -1;
++                options.ReconnectWait = 250;
++                options.AsyncErrorEventHandler = (s, e) => {
++                    ILogger<object> logger = services.GetService<ILogger<object>>();
++                    logger.LogError(e.Error);
++                };
++                ConnectionFactory connectionFactory = new ConnectionFactory();
++                return connectionFactory.CreateConnection(options);
++            });
+             ///
+             /// Test 9
+             ///
+diff --git a/app/dotnet/dotnet.csproj b/app/dotnet/dotnet.csproj
+index 1d38fa6..b9ef51e 100644
+--- a/app/dotnet/dotnet.csproj
++++ b/app/dotnet/dotnet.csproj
+@@ -7,6 +7,7 @@
+   <ItemGroup>
+     <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
+     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
++    <PackageReference Include="NATS.Client" Version="0.10.0" />
+   </ItemGroup>
+ 
+ </Project>

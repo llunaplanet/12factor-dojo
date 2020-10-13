@@ -1,0 +1,81 @@
+diff --git a/app/dotnet/Controllers/Server.cs b/app/dotnet/Controllers/Server.cs
+index b8d8eb6..a9e142b 100644
+--- a/app/dotnet/Controllers/Server.cs
++++ b/app/dotnet/Controllers/Server.cs
+@@ -63,7 +63,12 @@ namespace dotnet.Controllers
+         ///
+         /// Test 11
+         ///
+-
++        [HttpGet]
++        [Route("dameun500")]
++        public IActionResult dameun500()
++        {
++            throw new Exception("Toma un 500!");
++        }
+         ///
+         /// Test 9
+         /// 
+diff --git a/app/dotnet/Startup.cs b/app/dotnet/Startup.cs
+index d74c96b..4f5ea01 100644
+--- a/app/dotnet/Startup.cs
++++ b/app/dotnet/Startup.cs
+@@ -5,6 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
+ using Microsoft.Extensions.Hosting;
+ using Microsoft.Extensions.Caching.Memory;
+ using ServiceStack.Redis;
++using Serilog;
++using Serilog.Events;
++using Serilog.Formatting.Compact;
++using Microsoft.AspNetCore.Diagnostics;
++using Microsoft.AspNetCore.Http;
++using Microsoft.Extensions.Logging;
+ 
+ namespace dotnet
+ {
+@@ -44,6 +50,12 @@ namespace dotnet
+             ///
+             /// Test 11
+             ///
++            services.AddLogging(conf => {
++                conf.ClearProviders();
++                conf.AddSerilog(new LoggerConfiguration()
++                    .WriteTo.File(new CompactJsonFormatter(), "error.log", LogEventLevel.Error)
++                    .CreateLogger());
++            });
+             ///
+             /// Test 11
+             ///
+@@ -68,6 +80,20 @@ namespace dotnet
+             ///
+             /// Test 11
+             ///
++            else
++            {
++                app.UseExceptionHandler(errorHandler => {
++                    errorHandler.Run(async context => {
++                        var ex = context.Features.Get<IExceptionHandlerPathFeature>();
++                        ILogger<object> logger = context.RequestServices.GetService<ILogger<object>>();
++
++                        logger?.LogError(ex?.Error?.Message);
++                        context.Response.StatusCode = 500;
++                        await context.Response.WriteAsync($"Url: {context.Request.Path}\n");;
++                        await context.Response.WriteAsync($"Error: {ex?.Error?.Message}\n");
++                    });
++                });
++            }
+             ///
+             /// Test 11
+             ///
+diff --git a/app/dotnet/dotnet.csproj b/app/dotnet/dotnet.csproj
+index 103ed39..1d38fa6 100644
+--- a/app/dotnet/dotnet.csproj
++++ b/app/dotnet/dotnet.csproj
+@@ -6,6 +6,7 @@
+ 
+   <ItemGroup>
+     <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
++    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+   </ItemGroup>
+ 
+ </Project>
