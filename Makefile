@@ -2,15 +2,15 @@
 setup: create-dind build-executor
 hajime: start-executor
 clean: delete-dind
-	
+
 setup-nodejs:
 	echo "Seeting up [nodejs] stack..."
-	@echo "nodejs" > .sabor	
+	@echo "nodejs" > .sabor
 
 setup-go:
 	echo "Setting up [go] stack..."
 	@echo "go" > .sabor
-	
+
 # Targets to manage the DIND ( Execute in the host )
 
 create-dind:
@@ -20,22 +20,22 @@ create-dind:
 		--network-alias dind \
 		--name dind \
 		-e DOCKER_TLS_CERTDIR="" \
-		docker:19.03-dind --storage-driver overlay2
+		docker:20.10-dind --storage-driver overlay2
 
 start-dind:
 	docker start dind
 
 stop-dind:
 	docker stop dind
-	
+
 delete-dind: stop-dind
 	docker rm dind
-	
+
 # Targets to manage the executor ( Execute in the host )
-		
+
 build-executor:
 	docker build -t executor .
-	
+
 start-executor:
 	DIND_HOST=$$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dind ); \
 	docker run -it --rm \
@@ -64,22 +64,22 @@ prepare: build-test-runner
 # III. Store config in the environment
 test3: build-test-runner
 	time ./test/run.sh 3
-	
+
 # IV. Backing services
 test4: build-test-runner
 	time ./test/run.sh 4
-	
+
 patch4:
 	time ./test/patch.sh 4
 
 # V. Strictly separate build and run stages
 test5: build-test-runner
 	time ./test/run.sh 5
-	
+
 # VI. Processes
 test6: build-test-runner
 	time ./test/run.sh 6
-	
+
 patch6:
 	time ./test/patch.sh 6
 

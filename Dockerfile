@@ -1,8 +1,18 @@
-FROM docker:19.03
+FROM ruby:2.6.9-alpine3.14 as base
 WORKDIR /executor
-RUN apk update && \
-    apk add bash git make gcc py-pip python3-dev libc-dev libffi-dev openssl-dev && \
-    pip install docker-compose
+
+RUN apk -Uuv add groff libffi-dev less gcc openssl-dev build-base python3 python3-dev coreutils py-pip && \
+    python3 -m pip install --upgrade pip && \
+    python3 -m pip install cryptography==3.3.* && \
+    python3 -m pip install --no-cache-dir docker-compose && \
+    rm /var/cache/apk/*
+
+RUN set -ex \
+    && apk add --no-cache --virtual .app-rundeps \
+    openssh-client git curl cmake libssh2 libssh2-dev \
+    zip make docker \
+    bash jq
+
 COPY . .
 COPY .bashrc /.bashrc
 CMD ["/bin/bash"]
