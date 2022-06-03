@@ -38,17 +38,27 @@ describe "IX. Maximize robustness with fast startup and graceful shutdown" do
 
   end
 
-  it "When stopping the SUT it should stop accepting requests while it shuts down" do
+  it "When stopping the SUT it should stop accepting requests gracefully while it shuts down" do
 
-    5.times { HTTParty.get('http://sut-a/plusone', timeout: 2) }
+    @respose_codes = []
 
-    fork do
-      begin
-        sleep(3)
-        5.times { HTTParty.get('http://sut-a/plusone', timeout: 2) }
-      rescue
-        # nothing to do
-      end
+    redis = Redis.new(host: "redis-a", password: "passwordA")
+    plusone = redis.set("plusone", 0)
+
+    5.times {
+      response = HTTParty.get('http://sut-a/plusone', timeout: 2)
+      @respose_codes.push(response.code)
+    }
+
+    Thread.fork do
+      5.times {
+        begin
+          sleep(1)
+          response = HTTParty.get('http://sut-a/plusone', timeout: 2)
+          @respose_codes.push(response.code)
+        rescue
+        end
+      }
     end
 
     # Stop the sut container
@@ -56,10 +66,13 @@ describe "IX. Maximize robustness with fast startup and graceful shutdown" do
     container_stop_response = HTTParty.post("#{docker_host}/v1.38/containers/#{container_id}/stop?t=5")
     expect(container_stop_response.code).to eq(204)
 
-    redis = Redis.new(host: "redis-a", password: "passwordA")
+    response_200_count = @respose_codes.select { |code| code == 200 }.length
+    response_503_count = @respose_codes.select { |code| code == 503 }.length
+
     plusone = redis.get("plusone")
 
-    expect(plusone.to_i).to be <= 6
+    expect(plusone.to_i).to eq(response_200_count)
+    expect(response_503_count).to be > 0
 
   end
 
