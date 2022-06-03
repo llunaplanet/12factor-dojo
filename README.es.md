@@ -1,6 +1,6 @@
 # Bienvenidos al dojo 🏯 de 12 factor
 
-Aquí encontrarás algunos ejercicios, mezcla entre katas y koans con las que practicar tu DevOps-fu 🥋, mejorar tus habilidades y ganar experiencia. 
+Aquí encontrarás algunos ejercicios, mezcla entre katas y koans con las que practicar tu DevOps-fu 🥋, mejorar tus habilidades y ganar experiencia.
 
 ## The twelve-factor app
 
@@ -32,7 +32,7 @@ Deberemos ir haciendo las katakoans de una en una por orden ( el orden es import
 
 El arnés de test se va a encargar, para cada uno de los tests, de **construir una imagen de docker** con la aplicación, a esta imagen que llamaremos SUT se le pasarán una serie de tests ( de caja negra ) que validarán si el SUT es compatible con 12 factor.
 
-Los tests corren sobre una un entorno de docker totalmente aislado usando DIND ( Docker In Docker ). 
+Los tests corren sobre una un entorno de docker totalmente aislado usando DIND ( Docker In Docker ).
 
 Los tests usan docker-compose para declarar las dependencias del SUT en cada uno de los tests
 
@@ -55,7 +55,7 @@ Clona el repositorio
 ```
 git clone https://github.com/llunaplanet/12factor-dojo.git
 ```
-El siguiente comando va a preparar el entorno de test, va a crear el servicio DIND y a construir la imagen docker con las herramientas necesarias para lanzar los tests ( docker-compose, rspec ), 
+El siguiente comando va a preparar el entorno de test, va a crear el servicio DIND y a construir la imagen docker con las herramientas necesarias para lanzar los tests ( docker-compose, rspec ),
 
 Ejecuta el siguiente comando:
 ```
@@ -81,7 +81,7 @@ Empieza ejecutando el primer test con el sihguiente comando:
 ```
 $ make test3
 ```
-El objetivo es que el test pase en verde, lee el resultado y piensa cómo puedes modificar la aplicación para conseguirlo, en algunos casos no hay una sola solución. 
+El objetivo es que el test pase en verde, lee el resultado y piensa cómo puedes modificar la aplicación para conseguirlo, en algunos casos no hay una sola solución.
 
 > Puedes explorar el entorno de test ( archivos docker-compose ) en la carpeta `test/scenarios` y los tests en sí mismos en la carpeta `test/spec`
 
@@ -100,26 +100,26 @@ Este es el listado de las katakoans que hay actualmente junto con el comando que
 > IMPORTANTE: En algunas de las katakoans deberás ejecutar un comando extra para añadir a la aplicación nuevas funcionalidades con las que trabajar, puede que esto cause algún conflicto con tu git, pero esto también es bueno para practicar tu git-fu ;)
 
  - III. Store config in the environment    
-	 - `make test3`
+	 - `test 3`
  - IV. Backing services
-   - `make patch4` ( Ejecútalo sólo una vez )
-   - `make test4`
+   - `patch 4` ( Ejecútalo sólo una vez )
+   - `test 4`
  - V. Strictly separate build and run stages
-   - `make test5`
+   - `test 5`
  - VI. Procceses
-   - `make patch6` ( Ejecútalo sólo una vez )
-   - `make test6`
+   - `patch 6` ( Ejecútalo sólo una vez )
+   - `test 6`
  - XI. Treat logs as event streams
-   - `make patch11` ( Ejecútalo sólo una vez )
-   - `make test11`
+   - `patch 11` ( Ejecútalo sólo una vez )
+   - `test 11`
  - IX. Maximize robustness with fast startup and graceful shutdown
-   - `make patch9` ( Ejecútalo sólo una vez )
-   - `make test9`
-   
-Una vez hayas completado todos los ejercicios individualmente, ejecuta `make test-all` para pasar todos los tests en el mismo run
+   - `patch 9` ( Ejecútalo sólo una vez )
+   - `test 9`
+
+Una vez hayas completado todos los ejercicios individualmente, ejecuta `test all` para pasar todos los tests en el mismo run
 
 ### Restricciones
 
-- Lo único que se puede modificar es el contenido de la carpeta APP 
+- Lo único que se puede modificar es el contenido de la carpeta APP
 - Algunas de las katakoan tienen restricciones extra
-- No se puede modificar ninguno de los archivos dentro de la carpeta "tests" 
+- No se puede modificar ninguno de los archivos dentro de la carpeta "tests"
