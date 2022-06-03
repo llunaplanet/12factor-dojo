@@ -1,0 +1,59 @@
+version: '3'
+services:
+
+  proxy:
+    image: traefik:1.7-alpine
+    command: [
+      "--defaultentrypoints=http",
+      "--logLevel=INFO",
+      "--docker",
+      "--docker.watch",
+      "--docker.exposedbydefault=false"
+    ]
+    volumes:
+      - /dev/null:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - sut-a
+      - sut-b
+
+  sut-a:
+    image: sut
+    environment:
+      - PORT=80
+      - MOT=What's Up?
+      - ENVIRONMENT=staging
+      - REDIS_URI=redis://:passwordA@redis-a/0
+      - NATS_URI=nats://nats:4222
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.frontend.backend=sut"
+      - "traefik.backend=sut"
+      - "traefik.port=80"
+
+  sut-b:
+    image: sut
+    environment:
+      - PORT=80
+      - MOT=¿Qué pasa pisha?
+      - ENVIRONMENT=qa
+      - REDIS_URI=redis://:passwordA@redis-a/0
+      - NATS_URI=nats://nats-slow:4222
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=PathPrefix:/"
+      - "traefik.frontend.backend=sut"
+      - "traefik.backend=sut"
+      - "traefik.port=80"
+
+  redis-a:
+    image: "redis:5.0-alpine"
+    command: --requirepass passwordA
+
+  nats:
+    image: nats:alpine
+
+  nats-slow:
+    build: ../../dockerfiles/slownats
+    stop_signal: SIGKILL

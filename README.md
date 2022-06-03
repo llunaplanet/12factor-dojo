@@ -20,7 +20,7 @@ From here, we are going to call the exercises **katakoans** ( fancier suggestion
 
 ## How does this work?
 
-Ok so, on one hand we have a very simple app, an http endpoint that's not **12 factor** compliant, on the other hand we have a test harness, with a series of tests that covers each one of the **12 factors*, ( one or multiple tests for each factor ). 
+Ok so, on one hand we have a very simple app, an http endpoint that's not **12 factor** compliant, on the other hand we have a test harness, with a series of tests that covers each one of the **12 factors*, ( one or multiple tests for each factor ).
 
 The objective is to modify the provided application so all the tests are green, meaning that the app becomes **12 factor** compliant.
 
@@ -74,7 +74,7 @@ So now you are set to start practicing the katakoans:
 Start by executing the first test with the following command:
 
 ```
-$ make test3
+$ test 3
 ```
 
 Remember that the objective is for the tests to pass and become green. Read the test result and think how you can modify the app in such a way that the test passes. In some cases there is more than one solution.
@@ -96,25 +96,25 @@ This is the actual list of katakoans and the command that triggers each test:
 > IMPORTANT: In some of the katakoans you will need to execute an extra command to add new functionality to the app's code, this may cause some git trouble, but this is also useful to practice your git-fu ;)
 
  - III. Store config in the environment    
-	 - `make test3`
+	 - `test 3`
  - IV. Backing services
-   - `make patch4` ( Execute only once )
-   - `make test4`
+   - `patch 4` ( Execute only once )
+   - `test 4`
  - V. Strictly separate build and run stages
-   - `make test5`
+   - `test 5`
  - VI. Processes
-   - `make patch6` ( Execute only once )
-   - `make test6`
+   - `patch 6` ( Execute only once )
+   - `test 6`
  - XI. Treat logs as event streams
-   - `make patch11` ( Execute only once )
-   - `make test11`
+   - `patch 11` ( Execute only once )
+   - `test 11`
  - IX. Maximize robustness with fast startup and graceful shutdown
-   - `make patch9` ( Execute only once )
-   - `make test9`
-   
-Once you have completed all the exercises individually you can execute `make test-all` to run the complete test suite in one run.
+   - `patch 9` ( Execute only once )
+   - `test 9`
+
+Once you have completed all the exercises individually you can execute `test all` to run the complete test suite in one run.
 
 ### Some restrictions
 
-- The only code you can modify are the files in the `app` folder, if you modify any other file, you are cheating! 
+- The only code you can modify are the files in the `app` folder, if you modify any other file, you are cheating!
 - Some katakoans have additional restrictions
