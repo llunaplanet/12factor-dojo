@@ -1,5 +1,5 @@
 
-setup: create-dind build-executor
+setup: build-executor create-dind
 hajime: start-executor
 clean: delete-dind
 
@@ -53,7 +53,7 @@ start-executor-sync:
 
 build-test-runner:
 	# touch build-test-runner
-	docker build --quiet -t test-runner ./test
+	docker build -t test-runner ./test
 
 prepare: build-test-runner
 	docker pull node:10-alpine
